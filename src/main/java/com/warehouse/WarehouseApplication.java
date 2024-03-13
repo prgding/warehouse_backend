@@ -10,9 +10,7 @@ import org.springframework.cache.annotation.EnableCaching;
 @MapperScan(basePackages = {"com.warehouse.mapper", "com.warehouse.utils"})
 @SpringBootApplication
 public class WarehouseApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(WarehouseApplication.class, args);
     }
-
 }

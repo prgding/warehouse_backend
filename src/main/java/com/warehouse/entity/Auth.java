@@ -1,5 +1,6 @@
 package com.warehouse.entity;
 
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ApiModel(description = "权限(菜单)表")
 public class Auth {
 
 	private int authId;//权限(菜单)id
