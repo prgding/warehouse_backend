@@ -6,6 +6,7 @@ import com.warehouse.service.AuthService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,7 +24,7 @@ public class AuthController {
     /**
      * 查询整个权限(菜单)树的url接口/auth/auth-tree
      */
-    @RequestMapping("/auth-tree")
+    @GetMapping("/auth-tree")
     @ApiOperation("查询整个权限(菜单)树")
     public Result allAuthTree(){
         //执行业务
