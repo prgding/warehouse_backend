@@ -5,6 +5,7 @@ import com.warehouse.mapper.StatisticsMapper;
 import com.warehouse.service.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service

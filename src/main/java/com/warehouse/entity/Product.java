@@ -65,10 +65,10 @@ public class Product {
 
     private String imgs;//商品的图片地址
 
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date productDate;//商品的生产日期
 
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date suppDate;//商品的保质期
 
     private String isOverDate;//非表中字段 -- 商品是否过期,0未过期,1已过期

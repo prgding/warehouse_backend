@@ -3,7 +3,7 @@ package com.warehouse.exception;
 /**
  * 用户操作不当导致的异常
  */
-public class BusinessException extends RuntimeException{
+public class BusinessException extends RuntimeException {
 
     public BusinessException() {
     }

@@ -42,7 +42,7 @@ public class OutStoreController {
      */
     @RequestMapping("/outstore-add")
     public Result addOutStore(@RequestBody OutStore outStore,
-                              @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token){
+                              @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token) {
 
         //获取当前登录的用户
         CurrentUser currentUser = tokenUtils.getCurrentUser(token);
@@ -61,7 +61,7 @@ public class OutStoreController {
      * 查询所有仓库的url接口/outstore/store-list
      */
     @RequestMapping("/store-list")
-    public Result storeList(){
+    public Result storeList() {
         //执行业务
         List<Store> storeList = storeService.queryAllStore();
         //响应
@@ -78,7 +78,7 @@ public class OutStoreController {
      * 返回值Result对象向客户端响应组装了所有分页信息的Page对象;
      */
     @RequestMapping("/outstore-page-list")
-    public Result outStorePageList(Page page, OutStore outStore){
+    public Result outStorePageList(Page page, OutStore outStore) {
         //执行业务
         page = outStoreService.outStorePage(page, outStore);
         //响应
@@ -89,7 +89,7 @@ public class OutStoreController {
      * 确定出库的url接口/outstore/outstore-confirm
      */
     @RequestMapping("/outstore-confirm")
-    public Result confirmOutStore(@RequestBody OutStore outStore){
+    public Result confirmOutStore(@RequestBody OutStore outStore) {
         //执行业务
         Result result = outStoreService.confirmOutStore(outStore);
         //响应

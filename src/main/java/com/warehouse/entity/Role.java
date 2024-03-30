@@ -30,7 +30,7 @@ public class Role {
     private int createBy;//创建角色的用户id
 
     //json转换的日期格式
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;//创建时间
 
     private int updateBy;//修改角色的用户id

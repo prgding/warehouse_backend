@@ -40,7 +40,7 @@ public class PurchaseController {
      * 添加采购单的url接口/purchase/purchase-add
      */
     @RequestMapping("/purchase-add")
-    public Result addPurchase(@RequestBody Purchase purchase){
+    public Result addPurchase(@RequestBody Purchase purchase) {
         //执行业务
         Result result = purchaseService.savePurchase(purchase);
         //响应
@@ -51,7 +51,7 @@ public class PurchaseController {
      * 查询所有仓库的url接口/purchase/store-list
      */
     @RequestMapping("/store-list")
-    public Result storeList(){
+    public Result storeList() {
         //执行业务
         List<Store> storeList = storeService.queryAllStore();
         //响应
@@ -68,7 +68,7 @@ public class PurchaseController {
      * 返回值Result对象向客户端响应组装了所有分页信息的Page对象;
      */
     @RequestMapping("/purchase-page-list")
-    public Result purchasePageList(Page page, Purchase purchase){
+    public Result purchasePageList(Page page, Purchase purchase) {
         //执行业务
         page = purchaseService.queryPurchasePage(page, purchase);
         //响应
@@ -81,7 +81,7 @@ public class PurchaseController {
      * @RequestBody Purchase purchase将请求传递的json数据封装到参数Purchase对象;
      */
     @RequestMapping("/purchase-update")
-    public Result updatePurchase(@RequestBody Purchase purchase){
+    public Result updatePurchase(@RequestBody Purchase purchase) {
         //执行业务
         Result result = purchaseService.updatePurchase(purchase);
         //响应
@@ -94,7 +94,7 @@ public class PurchaseController {
      * @PathVariable Integer buyId将路径占位符buyId的值赋值给参数变量buyId;
      */
     @RequestMapping("/purchase-delete/{buyId}")
-    public Result deletePurchase(@PathVariable Integer buyId){
+    public Result deletePurchase(@PathVariable Integer buyId) {
         //执行业务
         Result result = purchaseService.deletePurchase(buyId);
         //响应
@@ -110,7 +110,7 @@ public class PurchaseController {
      */
     @RequestMapping("/in-warehouse-record-add")
     public Result addInStore(@RequestBody Purchase purchase,
-                             @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token){
+                             @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token) {
         //获取当前登录的用户
         CurrentUser currentUser = tokenUtils.getCurrentUser(token);
         //获取当前登录的用户id -- 创建入库单的用户id

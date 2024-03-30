@@ -3,7 +3,7 @@ package com.warehouse.exception;
 /**
  * 系统异常
  */
-public class SysException extends  RuntimeException{
+public class SysException extends RuntimeException {
 
     public SysException() {
     }

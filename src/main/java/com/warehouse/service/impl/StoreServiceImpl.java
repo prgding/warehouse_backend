@@ -54,7 +54,7 @@ public class StoreServiceImpl implements StoreService {
     public Result checkStoreNum(String storeNum) {
         //根据仓库编号查询仓库
         Store store = storeMapper.selectStoreByNum(storeNum);
-        return Result.ok(store==null);
+        return Result.ok(store == null);
     }
 
     //添加仓库的业务方法
@@ -62,7 +62,7 @@ public class StoreServiceImpl implements StoreService {
     public Result saveStore(Store store) {
         //添加仓库
         int i = storeMapper.insertStore(store);
-        if(i>0){
+        if (i > 0) {
             return Result.ok("仓库添加成功！");
         }
         return Result.err(Result.CODE_ERR_BUSINESS, "仓库添加失败！");
@@ -73,7 +73,7 @@ public class StoreServiceImpl implements StoreService {
     public Result updateStore(Store store) {
         //根据仓库id修改仓库
         int i = storeMapper.updateStoreById(store);
-        if(i>0){
+        if (i > 0) {
             return Result.ok("仓库修改成功！");
         }
         return Result.err(Result.CODE_ERR_BUSINESS, "仓库修改失败！");
@@ -84,7 +84,7 @@ public class StoreServiceImpl implements StoreService {
     public Result deleteStore(Integer storeId) {
         //根据仓库id删除仓库
         int i = storeMapper.deleteStoreById(storeId);
-        if(i>0){
+        if (i > 0) {
             return Result.ok("仓库删除成功！");
         }
         return Result.err(Result.CODE_ERR_BUSINESS, "仓库删除失败！");

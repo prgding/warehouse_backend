@@ -21,7 +21,7 @@ public class ServletConfig {
      * 注册原生Servlet的Filter
      */
     @Bean
-    public FilterRegistrationBean securityFilter(){
+    public FilterRegistrationBean securityFilter() {
 
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
         //创建SecurityFilter对象

@@ -56,7 +56,7 @@ public class SecurityFilter implements Filter {
         //    chain.doFilter(request, response);
         //    return;
         //}
-        if (!path.isEmpty()){
+        if (!path.isEmpty()) {
             System.out.println("白名单请求");
             chain.doFilter(request, response);
             return;

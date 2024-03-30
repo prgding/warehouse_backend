@@ -30,7 +30,7 @@ public class StoreController {
      * 返回值Result对象向客户端响应组装了所有分页信息的Page对象;
      */
     @RequestMapping("/store-page-list")
-    public Result storePageList(Page page, Store store){
+    public Result storePageList(Page page, Store store) {
         //执行业务
         page = storeService.queryStorePage(page, store);
         //响应
@@ -41,7 +41,7 @@ public class StoreController {
      * 校验仓库编号是否已存在的url接口/store/store-num-check
      */
     @RequestMapping("/store-num-check")
-    public Result checkStoreNum(String storeNum){
+    public Result checkStoreNum(String storeNum) {
         //执行业务
         Result result = storeService.checkStoreNum(storeNum);
         //响应
@@ -54,7 +54,7 @@ public class StoreController {
      * @RequestBody Store store将请求传递的json数据封装到参数Store对象;
      */
     @RequestMapping("/store-add")
-    public Result addStore(@RequestBody Store store){
+    public Result addStore(@RequestBody Store store) {
         //执行业务
         Result result = storeService.saveStore(store);
         //响应
@@ -67,11 +67,11 @@ public class StoreController {
      * @RequestBody Store store将请求传递的json数据封装到参数Store对象;
      */
     @RequestMapping("/store-update")
-    public Result updateStore(@RequestBody Store store){
+    public Result updateStore(@RequestBody Store store) {
         //执行业务
         Result result = storeService.updateStore(store);
         //响应
-        return  result;
+        return result;
     }
 
     /**
@@ -80,7 +80,7 @@ public class StoreController {
      * @PathVariable Integer storeId将路径占位符storeId的值赋值给参数变量storeId;
      */
     @RequestMapping("/store-delete/{storeId}")
-    public Result deleteStore(@PathVariable Integer storeId){
+    public Result deleteStore(@PathVariable Integer storeId) {
         //执行业务
         Result result = storeService.deleteStore(storeId);
         //响应
@@ -97,7 +97,7 @@ public class StoreController {
      * 返回值Result对象向客户端响应组装了当前页数据的List;
      */
     @RequestMapping("/exportTable")
-    public Result exportTable(Page page, Store store){
+    public Result exportTable(Page page, Store store) {
         //分页查询仓库
         page = storeService.queryStorePage(page, store);
         //拿到当前页数据

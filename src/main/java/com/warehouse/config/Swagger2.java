@@ -17,7 +17,7 @@ import java.util.List;
 
 @Configuration
 public class Swagger2 {
-	@Bean
+    @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.OAS_30)
                 //加载配置信息
@@ -29,6 +29,7 @@ public class Swagger2 {
                 .paths(PathSelectors.any())
                 .build();
     }
+
     /**
      * 获取swagger创建初始化信息
      */
@@ -39,6 +40,7 @@ public class Swagger2 {
                 .version("1.0.0")
                 .build();
     }
+
     private List<RequestParameter> globalRequestParameters() {
         RequestParameterBuilder tokenPar = new RequestParameterBuilder();
         List<RequestParameter> pars = new ArrayList<>();

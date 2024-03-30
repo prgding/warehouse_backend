@@ -35,7 +35,7 @@ public class RoleController {
      * 查询所有角色的url接口role/role-list
      */
     @RequestMapping("/role-list")
-    public Result queryAllRole(){
+    public Result queryAllRole() {
         //执行业务
         List<Role> roleList = roleService.getAllRole();
         //响应
@@ -51,7 +51,7 @@ public class RoleController {
      * 返回值Result对象向客户端响应组装了所有分页信息的Page对象;
      */
     @RequestMapping("/role-page-list")
-    public Result roleListPage(Page page, Role role){
+    public Result roleListPage(Page page, Role role) {
 
         //执行业务
         page = roleService.queryRolePage(page, role);
@@ -69,7 +69,7 @@ public class RoleController {
      */
     @RequestMapping("/role-add")
     public Result addRole(@RequestBody Role role,
-                          @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token){
+                          @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token) {
         //获取当前登录的用户
         CurrentUser currentUser = tokenUtils.getCurrentUser(token);
         //获取当前登录的用户id,即创建新角色的用户id
@@ -90,7 +90,7 @@ public class RoleController {
      */
     @RequestMapping("/role-state-update")
     public Result updateRoleState(@RequestBody Role role,
-                                  @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token){
+                                  @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token) {
         //获取当前登录的用户
         CurrentUser currentUser = tokenUtils.getCurrentUser(token);
         //获取当前登录的用户id,即修改角色的用户id
@@ -113,7 +113,7 @@ public class RoleController {
      * 返回值Result对象向客户端响应组装了给角色分配的所有权限(菜单)id的List<Integer>;
      */
     @RequestMapping("/role-auth")
-    public Result queryRoleAuth(Integer roleId){
+    public Result queryRoleAuth(Integer roleId) {
         //执行业务
         List<Integer> authIdList = roleService.queryAuthIds(roleId);
         //响应
@@ -127,7 +127,7 @@ public class RoleController {
      * 封装到参数AssignAuthDto对象中;
      */
     @RequestMapping("/auth-grant")
-    public Result assignAuth(@RequestBody AssignAuthDto assignAuthDto){
+    public Result assignAuth(@RequestBody AssignAuthDto assignAuthDto) {
         //执行业务
         authService.assignAuth(assignAuthDto);
         //响应
@@ -138,7 +138,7 @@ public class RoleController {
      * 删除角色的url接口/role/role-delete/{roleId}
      */
     @RequestMapping("/role-delete/{roleId}")
-    public Result deleteRole(@PathVariable Integer roleId){
+    public Result deleteRole(@PathVariable Integer roleId) {
         //执行业务
         roleService.deleteRole(roleId);
         //响应
@@ -154,7 +154,7 @@ public class RoleController {
      */
     @RequestMapping("/role-update")
     public Result updateRole(@RequestBody Role role,
-                             @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token){
+                             @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token) {
         //获取当前登录的用户
         CurrentUser currentUser = tokenUtils.getCurrentUser(token);
         //获取当前登录的用户id -- 修改角色的用户id

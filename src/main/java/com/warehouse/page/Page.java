@@ -36,11 +36,11 @@ public class Page {
 
     //计算总页数
     public Integer getPageCount() {
-        return totalNum%pageSize==0 ? totalNum/pageSize : totalNum/pageSize+1;
+        return totalNum % pageSize == 0 ? totalNum / pageSize : totalNum / pageSize + 1;
     }
 
     //计算limit函数参数一每页起始行
     public Integer getLimitIndex() {
-        return pageSize * (pageNum-1);
+        return pageSize * (pageNum - 1);
     }
 }

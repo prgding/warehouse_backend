@@ -36,27 +36,32 @@ public class Result {
     private Object data;//响应数据
 
     //成功响应的方法 -- 返回的Result中只封装了成功状态码
-    public static Result ok(){
-        return new Result(CODE_OK,true,null, null);
+    public static Result ok() {
+        return new Result(CODE_OK, true, null, null);
     }
+
     //成功响应的方法 -- 返回的Result中封装了成功状态码和响应信息
-    public static Result ok(String message){
-        return new Result(CODE_OK,true,message, null);
+    public static Result ok(String message) {
+        return new Result(CODE_OK, true, message, null);
     }
+
     //成功响应的方法 -- 返回的Result中封装了成功状态码和响应数据
-    public static Result ok(Object data){
-        return new Result(CODE_OK,true,null, data);
+    public static Result ok(Object data) {
+        return new Result(CODE_OK, true, null, data);
     }
+
     //成功响应的方法 -- 返回的Result中封装了成功状态码和响应信息和响应数据
-    public static Result ok(String message, Object data){
-        return new Result(CODE_OK,true,message, data);
+    public static Result ok(String message, Object data) {
+        return new Result(CODE_OK, true, message, data);
     }
+
     //失败响应的方法 -- 返回的Result中封装了失败状态码和响应信息
-    public static Result err(int errCode, String message){
-        return new Result(errCode,false, message, null);
+    public static Result err(int errCode, String message) {
+        return new Result(errCode, false, message, null);
     }
+
     //失败响应的方法 -- 返回的Result中封装了失败状态码和响应信息和响应数据
-    public static Result err(int errCode,String message,Object data){
-        return new Result(errCode,false,message, data);
+    public static Result err(int errCode, String message, Object data) {
+        return new Result(errCode, false, message, data);
     }
 }

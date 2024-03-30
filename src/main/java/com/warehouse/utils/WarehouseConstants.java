@@ -6,11 +6,11 @@ package com.warehouse.utils;
 public interface WarehouseConstants {
 
     //用户未审核
-    public String USER_STATE_NOT_PASS = "0";
+    String USER_STATE_NOT_PASS = "0";
 
     //用户已审核
-    public String USER_STATE_PASS = "1";
+    String USER_STATE_PASS = "1";
 
     //传递token的请求头名称
-    public String HEADER_TOKEN_NAME = "Token";
+    String HEADER_TOKEN_NAME = "Token";
 }

@@ -26,7 +26,7 @@ public class InStore {
 
     private Integer createBy;//创建入库单的用户id
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;//创建时间
 
     private Integer isIn;//是否入库,1.是,0.否

@@ -82,7 +82,7 @@ public class RoleServiceImpl implements RoleService {
 
         //根据角色名或角色代码查询角色
         Role oldRole = roleMapper.findRoleByNameOrCode(role.getRoleName(), role.getRoleCode());
-        if(oldRole!=null){//角色已存在
+        if (oldRole != null) {//角色已存在
             return Result.err(Result.CODE_ERR_BUSINESS, "该角色已存在！");
         }
         //角色不存在,添加角色
@@ -95,7 +95,7 @@ public class RoleServiceImpl implements RoleService {
     public Result updateRoleState(Role role) {
         //根据角色id修改角色状态
         int i = roleMapper.updateRoleState(role);
-        if(i>0){
+        if (i > 0) {
             return Result.ok("修改成功！");
         }
         return Result.err(Result.CODE_ERR_BUSINESS, "修改失败！");
@@ -114,7 +114,7 @@ public class RoleServiceImpl implements RoleService {
     public void deleteRole(Integer roleId) {
         //根据角色id删除角色
         int i = roleMapper.deleteRoleById(roleId);
-        if(i>0){
+        if (i > 0) {
             //根据角色id删除给角色已分配的所有权限(菜单)
             authMapper.delAuthByRoleId(roleId);
         }
@@ -126,7 +126,7 @@ public class RoleServiceImpl implements RoleService {
 
         //根据角色id修改角色描述
         int i = roleMapper.updateDescById(role);
-        if(i>0){
+        if (i > 0) {
             return Result.ok("角色修改成功！");
         }
         return Result.err(Result.CODE_ERR_BUSINESS, "角色修改失败！");

@@ -26,7 +26,7 @@ public class AuthController {
      */
     @GetMapping("/auth-tree")
     @ApiOperation("查询整个权限(菜单)树")
-    public Result allAuthTree(){
+    public Result allAuthTree() {
         //执行业务
         List<Auth> allAuthTree = authService.allAuthTree();
         //响应

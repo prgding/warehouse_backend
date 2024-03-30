@@ -11,7 +11,7 @@ import java.util.Arrays;
  */
 public class DigestUtil {
 
-    private static String encodingCharset = "UTF-8";
+    private static final String encodingCharset = "UTF-8";
 
     //对参数数据进行MD5加密的算法
     public static String hmacSign(String aValue) {
@@ -19,10 +19,10 @@ public class DigestUtil {
     }
 
     public static String hmacSign(String aValue, String aKey) {
-        byte k_ipad[] = new byte[64];
-        byte k_opad[] = new byte[64];
-        byte keyb[];
-        byte value[];
+        byte[] k_ipad = new byte[64];
+        byte[] k_opad = new byte[64];
+        byte[] keyb;
+        byte[] value;
         try {
             keyb = aKey.getBytes(encodingCharset);
             value = aValue.getBytes(encodingCharset);
@@ -46,7 +46,7 @@ public class DigestUtil {
         }
         md.update(k_ipad);
         md.update(value);
-        byte dg[] = md.digest();
+        byte[] dg = md.digest();
         md.reset();
         md.update(k_opad);
         md.update(dg, 0, 16);
@@ -54,7 +54,7 @@ public class DigestUtil {
         return toHex(dg);
     }
 
-    public static String toHex(byte input[]) {
+    public static String toHex(byte[] input) {
         if (input == null)
             return null;
         StringBuffer output = new StringBuffer(input.length * 2);

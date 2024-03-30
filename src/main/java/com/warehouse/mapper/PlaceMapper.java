@@ -7,5 +7,5 @@ import java.util.List;
 public interface PlaceMapper {
 
     //查询所有产地
-    public List<Place> findAllPlace();
+    List<Place> findAllPlace();
 }

@@ -29,7 +29,7 @@ public class OutStoreServiceImpl implements OutStoreService {
     public Result saveOutStore(OutStore outStore) {
         //添加出库单
         int i = outStoreMapper.insertOutStore(outStore);
-        if(i>0){
+        if (i > 0) {
             return Result.ok("添加出库单成功！");
         }
         return Result.err(Result.CODE_ERR_BUSINESS, "添加出库单失败！");
@@ -59,16 +59,16 @@ public class OutStoreServiceImpl implements OutStoreService {
 
         //根据商品id查询商品
         Product product = productMapper.selectProductById(outStore.getProductId());
-        if(outStore.getOutNum()>product.getProductInvent()){
+        if (outStore.getOutNum() > product.getProductInvent()) {
             return Result.err(Result.CODE_ERR_BUSINESS, "商品库存不足");
         }
 
         //根据id将出库单状态改为已出库
         int i = outStoreMapper.updateIsOutById(outStore.getOutsId());
-        if(i>0){
+        if (i > 0) {
             //根据商品id减商品库存
             int j = productMapper.addInventById(outStore.getProductId(), -outStore.getOutNum());
-            if(j>0){
+            if (j > 0) {
                 return Result.ok("出库成功！");
             }
             return Result.err(Result.CODE_ERR_BUSINESS, "出库失败！");
