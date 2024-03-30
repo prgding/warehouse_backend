@@ -35,7 +35,7 @@ public class LoginController {
 		/*
 		  校验验证码：
 		 */
-        if (!stringRedisTemplate.hasKey(loginUser.getVerificationCode())) {
+        if (Boolean.FALSE.equals(stringRedisTemplate.hasKey(loginUser.getVerificationCode()))) {
             return Result.err(Result.CODE_ERR_BUSINESS, "验证码不正确！");
         }
 

@@ -66,13 +66,6 @@
             <version>6.2.0.Final</version>
         </dependency>
 
-        <!--验证码工具kaptcha的依赖-->
-        <dependency>
-            <groupId>com.github.penggle</groupId>
-            <artifactId>kaptcha</artifactId>
-            <version>2.3.2</version>
-        </dependency>
-
         <!--pinyin4j的依赖(将汉字转成拼音的工具)-->
         <dependency>
             <groupId>com.belerweb</groupId>

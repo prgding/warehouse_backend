@@ -3,25 +3,20 @@ package com.warehouse.controller;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.core.lang.Console;
-import com.google.code.kaptcha.Producer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 @RequestMapping("/captcha")
 @RestController
 public class VerificationCodeController {
-
-    //注入id引用名为captchaProducer的Producer接口的实现类DefaultKaptcha的bean对象
-    @Resource(name = "captchaProducer")
-    private Producer captchaProducer;
 
     //注入redis模板
     @Autowired
@@ -35,14 +30,14 @@ public class VerificationCodeController {
         ServletOutputStream out = null;
         try {
             // Generate CAPTCHA using Hutool
-            LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(200, 100);
+            LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(200, 100, 4, 150);
             out = response.getOutputStream();
             lineCaptcha.write(out);
             Console.log(lineCaptcha.getCode());
             String code = lineCaptcha.getCode();
 
             // Store CAPTCHA code in Redis
-            stringRedisTemplate.opsForValue().set(code, code);
+            stringRedisTemplate.opsForValue().set(code, code, 5, TimeUnit.MINUTES);
 
             // Set response headers
             response.setDateHeader("Expires", 0);
