@@ -1,5 +1,8 @@
 package com.warehouse.controller;
 
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.LineCaptcha;
+import cn.hutool.core.lang.Console;
 import com.google.code.kaptcha.Producer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -8,10 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 @RequestMapping("/captcha")
@@ -30,40 +31,35 @@ public class VerificationCodeController {
      * 生成验证码图片的url接口/captcha/captchaImage
      */
     @GetMapping("/captchaImage")
-    public void getKaptchaImage(HttpServletResponse response) {
-
+    public void getCaptchaImage(HttpServletResponse response) {
         ServletOutputStream out = null;
         try {
-            //禁止浏览器缓存验证码图片的响应头
+            // Generate CAPTCHA using Hutool
+            LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(200, 100);
+            out = response.getOutputStream();
+            lineCaptcha.write(out);
+            Console.log(lineCaptcha.getCode());
+            String code = lineCaptcha.getCode();
+
+            // Store CAPTCHA code in Redis
+            stringRedisTemplate.opsForValue().set(code, code);
+
+            // Set response headers
             response.setDateHeader("Expires", 0);
             response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
             response.addHeader("Cache-Control", "post-check=0, pre-check=0");
             response.setHeader("Pragma", "no-cache");
-
-            //响应正文为jpg图片即验证码图片
             response.setContentType("image/jpeg");
 
-            //生成验证码文本
-            String code = captchaProducer.createText();
-            //生成验证码图片
-            BufferedImage bi = captchaProducer.createImage(code);
-
-            //将验证码文本存储到redis
-            stringRedisTemplate.opsForValue().set(code, code);
-
-            //将验证码图片响应给浏览器
-            out = response.getOutputStream();
-            ImageIO.write(bi, "jpg", out);
-            out.flush();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (out != null) {
+            if (out != null) {
+                try {
                     out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
         }
     }
