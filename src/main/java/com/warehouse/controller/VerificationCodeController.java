@@ -30,7 +30,7 @@ public class VerificationCodeController {
         ServletOutputStream out = null;
         try {
             // Generate CAPTCHA using Hutool
-            LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(200, 100, 4, 150);
+            LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(100, 40, 4, 30);
             out = response.getOutputStream();
             lineCaptcha.write(out);
             Console.log(lineCaptcha.getCode());
