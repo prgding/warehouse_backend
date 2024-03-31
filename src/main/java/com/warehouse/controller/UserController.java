@@ -12,6 +12,7 @@ import com.warehouse.service.UserService;
 import com.warehouse.utils.CurrentUser;
 import com.warehouse.utils.TokenUtils;
 import com.warehouse.utils.WarehouseConstants;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
+@Api(tags = "11-用户管理")
 public class UserController {
 
     //注入AuthService
@@ -62,7 +64,7 @@ public class UserController {
      *
      * 返回值Result对象向客户端响应组装了所有分页信息的Page对象;
      */
-    @RequestMapping("/user-list")
+    @PostMapping("/user-list")
     public Result userListPage(Page page, User user) {
         //执行业务
         page = userService.queryUserPage(page, user);
@@ -77,7 +79,7 @@ public class UserController {
      * @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token
      * 将请求头Token的值即客户端归还的token赋值给参数变量token;
      */
-    @RequestMapping("/addUser")
+    @PostMapping("/addUser")
     public Result addUser(@RequestBody User user,
                           @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token) {
         //获取当前登录的用户
@@ -97,7 +99,7 @@ public class UserController {
      * @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token
      * 将请求头Token的值即客户端归还的token赋值给参数变量token;
      */
-    @RequestMapping("/updateState")
+    @PostMapping("/updateState")
     public Result updateUserState(@RequestBody User user,
                                   @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token) {
         //获取当前登录的用户
@@ -119,7 +121,7 @@ public class UserController {
     /**
      * 查询用户已分配的角色的url接口/user/user-role-list/{userId}
      */
-    @RequestMapping("/user-role-list/{userId}")
+    @PostMapping("/user-role-list/{userId}")
     public Result userRoleList(@PathVariable Integer userId) {
         //执行业务
         List<Role> roleList = roleService.queryRolesByUserId(userId);
@@ -133,7 +135,7 @@ public class UserController {
      * @RequestBody AssignRoleDto assignRoleDto将请求传递的json数据
      * 封装到参数AssignRoleDto对象中;
      */
-    @RequestMapping("/assignRole")
+    @PostMapping("/assignRole")
     public Result assignRole(@RequestBody AssignRoleDto assignRoleDto) {
         //执行业务
         roleService.assignRole(assignRoleDto);
@@ -144,7 +146,7 @@ public class UserController {
     /**
      * 删除用户的url接口/user/deleteUser/{userId}
      */
-    @RequestMapping("/deleteUser/{userId}")
+    @DeleteMapping("/deleteUser/{userId}")
     public Result deleteUser(@PathVariable Integer userId) {
         //执行业务
         userService.deleteUserById(userId);
@@ -159,7 +161,7 @@ public class UserController {
      * @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token
      * 将请求头Token的值即客户端归还的token赋值给参数变量token;
      */
-    @RequestMapping("/updateUser")
+    @PostMapping("/updateUser")
     public Result updateUser(@RequestBody User user,
                              @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token) {
         //获取当前登录的用户
@@ -179,7 +181,7 @@ public class UserController {
     /**
      * 重置密码的url接口/user/updatePwd/{userId}
      */
-    @RequestMapping("/updatePwd/{userId}")
+    @PostMapping("/updatePwd/{userId}")
     public Result resetPassWord(@PathVariable Integer userId) {
         //执行业务
         Result result = userService.resetPwd(userId);

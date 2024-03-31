@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-public class Swagger2 {
+public class Swagger3 {
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.OAS_30)

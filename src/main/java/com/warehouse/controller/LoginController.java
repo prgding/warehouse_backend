@@ -8,11 +8,13 @@ import com.warehouse.utils.CurrentUser;
 import com.warehouse.utils.DigestUtil;
 import com.warehouse.utils.TokenUtils;
 import com.warehouse.utils.WarehouseConstants;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@Api(tags = "03-登录管理")
 public class LoginController {
 
     //注入UserService

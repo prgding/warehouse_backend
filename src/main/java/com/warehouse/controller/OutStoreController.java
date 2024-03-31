@@ -9,16 +9,15 @@ import com.warehouse.service.StoreService;
 import com.warehouse.utils.CurrentUser;
 import com.warehouse.utils.TokenUtils;
 import com.warehouse.utils.WarehouseConstants;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RequestMapping("/outstore")
 @RestController
+@Api(tags = "04-出库管理")
 public class OutStoreController {
 
     //注入OutStoreService
@@ -40,7 +39,7 @@ public class OutStoreController {
      * @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token
      * 将请求头Token的值即客户端归还的token赋值给参数变量token;
      */
-    @RequestMapping("/outstore-add")
+    @PostMapping("/outstore-add")
     public Result addOutStore(@RequestBody OutStore outStore,
                               @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token) {
 
@@ -60,7 +59,7 @@ public class OutStoreController {
     /**
      * 查询所有仓库的url接口/outstore/store-list
      */
-    @RequestMapping("/store-list")
+    @GetMapping("/store-list")
     public Result storeList() {
         //执行业务
         List<Store> storeList = storeService.queryAllStore();
@@ -77,7 +76,7 @@ public class OutStoreController {
      *
      * 返回值Result对象向客户端响应组装了所有分页信息的Page对象;
      */
-    @RequestMapping("/outstore-page-list")
+    @PostMapping("/outstore-page-list")
     public Result outStorePageList(Page page, OutStore outStore) {
         //执行业务
         page = outStoreService.outStorePage(page, outStore);
@@ -88,7 +87,7 @@ public class OutStoreController {
     /**
      * 确定出库的url接口/outstore/outstore-confirm
      */
-    @RequestMapping("/outstore-confirm")
+    @PostMapping("/outstore-confirm")
     public Result confirmOutStore(@RequestBody OutStore outStore) {
         //执行业务
         Result result = outStoreService.confirmOutStore(outStore);

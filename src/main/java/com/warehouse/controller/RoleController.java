@@ -9,6 +9,7 @@ import com.warehouse.service.RoleService;
 import com.warehouse.utils.CurrentUser;
 import com.warehouse.utils.TokenUtils;
 import com.warehouse.utils.WarehouseConstants;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,7 @@ import java.util.List;
 
 @RequestMapping("/role")
 @RestController
+@Api(tags = "08-角色管理")
 public class RoleController {
 
     //注入RoleService
@@ -34,7 +36,7 @@ public class RoleController {
     /**
      * 查询所有角色的url接口role/role-list
      */
-    @RequestMapping("/role-list")
+    @GetMapping("/role-list")
     public Result queryAllRole() {
         //执行业务
         List<Role> roleList = roleService.getAllRole();
@@ -50,7 +52,7 @@ public class RoleController {
      *
      * 返回值Result对象向客户端响应组装了所有分页信息的Page对象;
      */
-    @RequestMapping("/role-page-list")
+    @PostMapping("/role-page-list")
     public Result roleListPage(Page page, Role role) {
 
         //执行业务
@@ -67,7 +69,7 @@ public class RoleController {
      * @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token
      * 将请求头Token的值即客户端归还的token赋值给参数变量token;
      */
-    @RequestMapping("/role-add")
+    @PostMapping("/role-add")
     public Result addRole(@RequestBody Role role,
                           @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token) {
         //获取当前登录的用户
@@ -88,7 +90,7 @@ public class RoleController {
      * @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token
      * 将请求头Token的值即客户端归还的token赋值给参数变量token;
      */
-    @RequestMapping("/role-state-update")
+    @PostMapping("/role-state-update")
     public Result updateRoleState(@RequestBody Role role,
                                   @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token) {
         //获取当前登录的用户
@@ -112,7 +114,7 @@ public class RoleController {
      * Integer roleId将请求参数roleId赋值给请求处理方法参数roleId;
      * 返回值Result对象向客户端响应组装了给角色分配的所有权限(菜单)id的List<Integer>;
      */
-    @RequestMapping("/role-auth")
+    @GetMapping("/role-auth")
     public Result queryRoleAuth(Integer roleId) {
         //执行业务
         List<Integer> authIdList = roleService.queryAuthIds(roleId);
@@ -126,7 +128,7 @@ public class RoleController {
      * @RequestBody AssignAuthDto assignAuthDto将请求传递的json数据
      * 封装到参数AssignAuthDto对象中;
      */
-    @RequestMapping("/auth-grant")
+    @PostMapping("/auth-grant")
     public Result assignAuth(@RequestBody AssignAuthDto assignAuthDto) {
         //执行业务
         authService.assignAuth(assignAuthDto);
@@ -137,7 +139,7 @@ public class RoleController {
     /**
      * 删除角色的url接口/role/role-delete/{roleId}
      */
-    @RequestMapping("/role-delete/{roleId}")
+    @DeleteMapping("/role-delete/{roleId}")
     public Result deleteRole(@PathVariable Integer roleId) {
         //执行业务
         roleService.deleteRole(roleId);
@@ -152,7 +154,7 @@ public class RoleController {
      * @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token
      * 将请求头Token的值即客户端归还的token赋值给参数变量token;
      */
-    @RequestMapping("/role-update")
+    @PostMapping("/role-update")
     public Result updateRole(@RequestBody Role role,
                              @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token) {
         //获取当前登录的用户

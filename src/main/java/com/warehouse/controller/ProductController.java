@@ -6,6 +6,7 @@ import com.warehouse.service.*;
 import com.warehouse.utils.CurrentUser;
 import com.warehouse.utils.TokenUtils;
 import com.warehouse.utils.WarehouseConstants;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ResourceUtils;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @RequestMapping("/product")
 @RestController
+@Api(tags = "05-商品管理")
 public class ProductController {
 
     //注入StoreService
@@ -63,7 +65,7 @@ public class ProductController {
      *
      * 返回值Result对象给客户端响应查询到的List<Store>;
      */
-    @RequestMapping("/store-list")
+    @GetMapping("/store-list")
     public Result storeList() {
         //执行业务
         List<Store> storeList = storeService.queryAllStore();
@@ -76,7 +78,7 @@ public class ProductController {
      *
      * 返回值Result对象给客户端响应查询到的List<Brand>;
      */
-    @RequestMapping("/brand-list")
+    @GetMapping("/brand-list")
     public Result brandList() {
         //执行业务
         List<Brand> brandList = brandService.queryAllBrand();
@@ -89,7 +91,7 @@ public class ProductController {
      *
      * 返回值Result对象给客户端响应查询到的所有商品分类树List<ProductType>;
      */
-    @RequestMapping("/category-tree")
+    @GetMapping("/category-tree")
     public Result categoryTree() {
         //执行业务
         List<ProductType> typeTreeList = productTypeService.allProductTypeTree();
@@ -102,7 +104,7 @@ public class ProductController {
      *
      * 返回值Result对象给客户端响应查询到的List<Supply>;
      */
-    @RequestMapping("/supply-list")
+    @GetMapping("/supply-list")
     public Result supplyList() {
         //执行业务
         List<Supply> supplyList = supplyService.queryAllSupply();
@@ -115,7 +117,7 @@ public class ProductController {
      *
      * 返回值Result对象给客户端响应查询到的List<Place>;
      */
-    @RequestMapping("/place-list")
+    @GetMapping("/place-list")
     public Result placeList() {
         //执行业务
         List<Place> placeList = placeService.queryAllPlace();
@@ -128,7 +130,7 @@ public class ProductController {
      *
      * 返回值Result对象给客户端响应查询到的List<Unit>;
      */
-    @RequestMapping("/unit-list")
+    @GetMapping("/unit-list")
     public Result unitList() {
         //执行业务
         List<Unit> unitList = unitService.queryAllUnit();
@@ -146,7 +148,7 @@ public class ProductController {
      *
      * 返回值Result对象向客户端响应组装了所有分页信息的Page对象;
      */
-    @RequestMapping("/product-page-list")
+    @PostMapping("/product-page-list")
     public Result productPageList(Page page, Product product) {
         //执行业务
         page = productService.queryProductPage(page, product);
@@ -189,7 +191,7 @@ public class ProductController {
      * @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token
      * 将请求头Token的值即客户端归还的token赋值给参数变量token;
      */
-    @RequestMapping("/product-add")
+    @PostMapping("/product-add")
     public Result addProduct(@RequestBody Product product,
                              @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token) {
 
@@ -211,7 +213,7 @@ public class ProductController {
      *
      * @RequestBody Product product用于接收并封装请求json数据;
      */
-    @RequestMapping("/state-change")
+    @PutMapping("/state-change")
     public Result changeProductState(@RequestBody Product product) {
         //执行业务
         Result result = productService.updateProductState(product);
@@ -222,7 +224,7 @@ public class ProductController {
     /**
      * 删除商品的url接口/product/product-delete/{productId}
      */
-    @RequestMapping("/product-delete/{productId}")
+    @DeleteMapping("/product-delete/{productId}")
     public Result deleteProduct(@PathVariable Integer productId) {
         //执行业务
         Result result = productService.deleteProduct(productId);
@@ -237,7 +239,7 @@ public class ProductController {
      * @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token
      * 将请求头Token的值即客户端归还的token赋值给参数变量token;
      */
-    @RequestMapping("/product-update")
+    @PostMapping("/product-update")
     public Result updateProduct(@RequestBody Product product,
                                 @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token) {
 

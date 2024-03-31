@@ -4,16 +4,15 @@ import com.warehouse.entity.Result;
 import com.warehouse.entity.Store;
 import com.warehouse.page.Page;
 import com.warehouse.service.StoreService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RequestMapping("/store")
 @RestController
+@Api(tags = "10-仓库管理")
 public class StoreController {
 
     //注入StoreService
@@ -29,7 +28,7 @@ public class StoreController {
      *
      * 返回值Result对象向客户端响应组装了所有分页信息的Page对象;
      */
-    @RequestMapping("/store-page-list")
+    @PostMapping("/store-page-list")
     public Result storePageList(Page page, Store store) {
         //执行业务
         page = storeService.queryStorePage(page, store);
@@ -40,7 +39,7 @@ public class StoreController {
     /**
      * 校验仓库编号是否已存在的url接口/store/store-num-check
      */
-    @RequestMapping("/store-num-check")
+    @PostMapping("/store-num-check")
     public Result checkStoreNum(String storeNum) {
         //执行业务
         Result result = storeService.checkStoreNum(storeNum);
@@ -53,7 +52,7 @@ public class StoreController {
      *
      * @RequestBody Store store将请求传递的json数据封装到参数Store对象;
      */
-    @RequestMapping("/store-add")
+    @PostMapping("/store-add")
     public Result addStore(@RequestBody Store store) {
         //执行业务
         Result result = storeService.saveStore(store);
@@ -66,7 +65,7 @@ public class StoreController {
      *
      * @RequestBody Store store将请求传递的json数据封装到参数Store对象;
      */
-    @RequestMapping("/store-update")
+    @PostMapping("/store-update")
     public Result updateStore(@RequestBody Store store) {
         //执行业务
         Result result = storeService.updateStore(store);
@@ -79,7 +78,7 @@ public class StoreController {
      *
      * @PathVariable Integer storeId将路径占位符storeId的值赋值给参数变量storeId;
      */
-    @RequestMapping("/store-delete/{storeId}")
+    @DeleteMapping("/store-delete/{storeId}")
     public Result deleteStore(@PathVariable Integer storeId) {
         //执行业务
         Result result = storeService.deleteStore(storeId);
@@ -96,7 +95,7 @@ public class StoreController {
      *
      * 返回值Result对象向客户端响应组装了当前页数据的List;
      */
-    @RequestMapping("/exportTable")
+    @PostMapping("/exportTable")
     public Result exportTable(Page page, Store store) {
         //分页查询仓库
         page = storeService.queryStorePage(page, store);

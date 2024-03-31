@@ -11,6 +11,7 @@ import com.warehouse.service.StoreService;
 import com.warehouse.utils.CurrentUser;
 import com.warehouse.utils.TokenUtils;
 import com.warehouse.utils.WarehouseConstants;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,7 @@ import java.util.List;
 
 @RequestMapping("/purchase")
 @RestController
+@Api(tags = "07-采购管理")
 public class PurchaseController {
 
     //注入PurchaseService
@@ -39,7 +41,7 @@ public class PurchaseController {
     /**
      * 添加采购单的url接口/purchase/purchase-add
      */
-    @RequestMapping("/purchase-add")
+    @PostMapping("/purchase-add")
     public Result addPurchase(@RequestBody Purchase purchase) {
         //执行业务
         Result result = purchaseService.savePurchase(purchase);
@@ -50,7 +52,7 @@ public class PurchaseController {
     /**
      * 查询所有仓库的url接口/purchase/store-list
      */
-    @RequestMapping("/store-list")
+    @GetMapping("/store-list")
     public Result storeList() {
         //执行业务
         List<Store> storeList = storeService.queryAllStore();
@@ -67,7 +69,7 @@ public class PurchaseController {
      *
      * 返回值Result对象向客户端响应组装了所有分页信息的Page对象;
      */
-    @RequestMapping("/purchase-page-list")
+    @PostMapping("/purchase-page-list")
     public Result purchasePageList(Page page, Purchase purchase) {
         //执行业务
         page = purchaseService.queryPurchasePage(page, purchase);
@@ -80,7 +82,7 @@ public class PurchaseController {
      *
      * @RequestBody Purchase purchase将请求传递的json数据封装到参数Purchase对象;
      */
-    @RequestMapping("/purchase-update")
+    @PostMapping("/purchase-update")
     public Result updatePurchase(@RequestBody Purchase purchase) {
         //执行业务
         Result result = purchaseService.updatePurchase(purchase);
@@ -93,7 +95,7 @@ public class PurchaseController {
      *
      * @PathVariable Integer buyId将路径占位符buyId的值赋值给参数变量buyId;
      */
-    @RequestMapping("/purchase-delete/{buyId}")
+    @DeleteMapping("/purchase-delete/{buyId}")
     public Result deletePurchase(@PathVariable Integer buyId) {
         //执行业务
         Result result = purchaseService.deletePurchase(buyId);
@@ -108,7 +110,7 @@ public class PurchaseController {
      * @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token
      * 将请求头Token的值即客户端归还的token赋值给参数变量token;
      */
-    @RequestMapping("/in-warehouse-record-add")
+    @PostMapping("/in-warehouse-record-add")
     public Result addInStore(@RequestBody Purchase purchase,
                              @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token) {
         //获取当前登录的用户

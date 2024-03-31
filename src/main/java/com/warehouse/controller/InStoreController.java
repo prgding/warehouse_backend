@@ -6,20 +6,16 @@ import com.warehouse.entity.Store;
 import com.warehouse.page.Page;
 import com.warehouse.service.InStoreService;
 import com.warehouse.service.StoreService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RequestMapping("/instore")
 @RestController
-@Tag(name = "02-入库管理", description = "入库管理API")
+@Api(tags = "02-入库管理")
 public class InStoreController {
 
     //注入StoreService
@@ -51,8 +47,8 @@ public class InStoreController {
      *
      * 返回值Result对象向客户端响应组装了所有分页信息的Page对象;
      */
-    @RequestMapping("/instore-page-list")
-    @Operation(summary = "分页查询入库单")
+    @PostMapping("/instore-page-list")
+    @ApiOperation("分页查询入库单")
     public Result inStorePageList(Page page, InStore inStore) {
         //执行业务
         page = inStoreService.queryInStorePage(page, inStore);
@@ -65,7 +61,8 @@ public class InStoreController {
      *
      * @RequestBody InStore inStore将请求传递的json数据封装到参数InStore对象;
      */
-    @RequestMapping("/instore-confirm")
+    @PostMapping("/instore-confirm")
+    @ApiOperation("确定入库")
     public Result confirmInStore(@RequestBody InStore inStore) {
         //执行业务
         Result result = inStoreService.confirmInStore(inStore);

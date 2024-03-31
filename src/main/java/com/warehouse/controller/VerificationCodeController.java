@@ -3,6 +3,7 @@ package com.warehouse.controller;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.core.lang.Console;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 @RequestMapping("/captcha")
 @RestController
+@Api(tags = "12-验证码管理")
 public class VerificationCodeController {
 
     //注入redis模板
