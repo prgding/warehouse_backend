@@ -34,10 +34,9 @@ public class VerificationCodeController {
             out = response.getOutputStream();
             lineCaptcha.write(out);
             Console.log(lineCaptcha.getCode());
-            String code = lineCaptcha.getCode();
 
             // Store CAPTCHA code in Redis
-            stringRedisTemplate.opsForValue().set(code, code, 5, TimeUnit.MINUTES);
+            stringRedisTemplate.opsForValue().set(lineCaptcha.getCode().toLowerCase(), "", 5, TimeUnit.MINUTES);
 
             // Set response headers
             response.setDateHeader("Expires", 0);
