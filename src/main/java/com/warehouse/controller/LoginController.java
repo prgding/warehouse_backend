@@ -9,25 +9,23 @@ import com.warehouse.utils.DigestUtil;
 import com.warehouse.utils.TokenUtils;
 import com.warehouse.utils.WarehouseConstants;
 import io.swagger.annotations.Api;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Api(tags = "03-登录管理")
+@RequiredArgsConstructor
 public class LoginController {
 
     //注入UserService
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     //注入redis模板
-    @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+    private final StringRedisTemplate stringRedisTemplate;
 
     //注入TokenUtils
-    @Autowired
-    private TokenUtils tokenUtils;
+    private final TokenUtils tokenUtils;
 
     /**
      * 登录的url接口/login

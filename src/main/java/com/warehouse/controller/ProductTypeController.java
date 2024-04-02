@@ -4,7 +4,7 @@ import com.warehouse.entity.ProductType;
 import com.warehouse.entity.Result;
 import com.warehouse.service.ProductTypeService;
 import io.swagger.annotations.Api;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,11 +12,11 @@ import java.util.List;
 @RequestMapping("/productCategory")
 @RestController
 @Api(tags = "06-商品分类管理")
+@RequiredArgsConstructor
 public class ProductTypeController {
 
     //注入ProductTypeService
-    @Autowired
-    private ProductTypeService productTypeService;
+    private final ProductTypeService productTypeService;
 
     /**
      * 查询商品分类树的url接口/productCategory/product-category-tree

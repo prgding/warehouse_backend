@@ -8,23 +8,22 @@ import com.warehouse.service.InStoreService;
 import com.warehouse.service.StoreService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RequestMapping("/instore")
 @RestController
+@RequiredArgsConstructor
 @Api(tags = "02-入库管理")
 public class InStoreController {
 
     //注入StoreService
-    @Autowired
-    private StoreService StoreService;
+    private final StoreService StoreService;
 
     //注入InStoreService
-    @Autowired
-    private InStoreService inStoreService;
+    private final InStoreService inStoreService;
 
     /**
      * 查询所有仓库的url接口/instore/store-list

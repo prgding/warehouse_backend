@@ -10,7 +10,7 @@ import com.warehouse.utils.CurrentUser;
 import com.warehouse.utils.TokenUtils;
 import com.warehouse.utils.WarehouseConstants;
 import io.swagger.annotations.Api;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -18,20 +18,18 @@ import java.util.List;
 
 @RequestMapping("/role")
 @RestController
+@RequiredArgsConstructor
 @Api(tags = "08-角色管理")
 public class RoleController {
 
     //注入RoleService
-    @Autowired
-    private RoleService roleService;
+    private final RoleService roleService;
 
     //注入TokenUtils
-    @Autowired
-    private TokenUtils tokenUtils;
+    private final TokenUtils tokenUtils;
 
     //注入AuthService
-    @Autowired
-    private AuthService authService;
+    private final AuthService authService;
 
     /**
      * 查询所有角色的url接口role/role-list

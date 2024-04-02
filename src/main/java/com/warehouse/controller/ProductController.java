@@ -7,7 +7,7 @@ import com.warehouse.utils.CurrentUser;
 import com.warehouse.utils.TokenUtils;
 import com.warehouse.utils.WarehouseConstants;
 import io.swagger.annotations.Api;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
@@ -20,39 +20,32 @@ import java.util.List;
 @RequestMapping("/product")
 @RestController
 @Api(tags = "05-商品管理")
+@RequiredArgsConstructor
 public class ProductController {
 
     //注入StoreService
-    @Autowired
-    private StoreService storeService;
+    private final StoreService storeService;
 
     //注入BrandService
-    @Autowired
-    private BrandService brandService;
+    private final BrandService brandService;
 
     //注入ProductTypeService
-    @Autowired
-    private ProductTypeService productTypeService;
+    private final ProductTypeService productTypeService;
 
     //注入SupplyService
-    @Autowired
-    private SupplyService supplyService;
+    private final SupplyService supplyService;
 
     //注入PlaceService
-    @Autowired
-    private PlaceService placeService;
+    private final PlaceService placeService;
 
     //注入UnitService
-    @Autowired
-    private UnitService unitService;
+    private final UnitService unitService;
 
     //注入ProductService
-    @Autowired
-    private ProductService productService;
+    private final ProductService productService;
 
     //注入TokenUtils
-    @Autowired
-    private TokenUtils tokenUtils;
+    private final TokenUtils tokenUtils;
     /**
      * 将配置文件的file.upload-path属性值注入给控制器的uploadPath属性,
      * 其为图片上传到项目的目录路径(类路径classes即resources下的static/img/upload);

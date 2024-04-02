@@ -13,7 +13,7 @@ import com.warehouse.utils.CurrentUser;
 import com.warehouse.utils.TokenUtils;
 import com.warehouse.utils.WarehouseConstants;
 import io.swagger.annotations.Api;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -21,24 +21,21 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
+@RequiredArgsConstructor
 @Api(tags = "11-用户管理")
 public class UserController {
 
     //注入AuthService
-    @Autowired
-    private AuthService authService;
+    private final AuthService authService;
 
     //注入TokenUtils
-    @Autowired
-    private TokenUtils tokenUtils;
+    private final TokenUtils tokenUtils;
 
     //注入UserService
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     //注入RoleService
-    @Autowired
-    private RoleService roleService;
+    private final RoleService roleService;
 
     /**
      * 加载当前登录用户权限(菜单)树的url接口/user/auth-list

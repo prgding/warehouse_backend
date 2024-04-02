@@ -5,19 +5,19 @@ import com.warehouse.entity.Store;
 import com.warehouse.page.Page;
 import com.warehouse.service.StoreService;
 import io.swagger.annotations.Api;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RequestMapping("/store")
 @RestController
+@RequiredArgsConstructor
 @Api(tags = "10-仓库管理")
 public class StoreController {
 
     //注入StoreService
-    @Autowired
-    private StoreService storeService;
+    private final StoreService storeService;
 
     /**
      * 分页查询仓库的url接口/store/store-page-list

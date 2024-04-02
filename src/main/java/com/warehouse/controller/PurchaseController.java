@@ -12,31 +12,28 @@ import com.warehouse.utils.CurrentUser;
 import com.warehouse.utils.TokenUtils;
 import com.warehouse.utils.WarehouseConstants;
 import io.swagger.annotations.Api;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RequestMapping("/purchase")
 @RestController
+@RequiredArgsConstructor
 @Api(tags = "07-采购管理")
 public class PurchaseController {
 
     //注入PurchaseService
-    @Autowired
-    private PurchaseService purchaseService;
+    private final PurchaseService purchaseService;
 
     //注入StoreService
-    @Autowired
-    private StoreService storeService;
+    private final StoreService storeService;
 
     //注入TokenUtils
-    @Autowired
-    private TokenUtils tokenUtils;
+    private final TokenUtils tokenUtils;
 
     //注入InStoreService
-    @Autowired
-    private InStoreService inStoreService;
+    private final InStoreService inStoreService;
 
     /**
      * 添加采购单的url接口/purchase/purchase-add
