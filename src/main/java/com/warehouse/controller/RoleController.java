@@ -126,7 +126,7 @@ public class RoleController {
      * @RequestBody AssignAuthDto assignAuthDto将请求传递的json数据
      * 封装到参数AssignAuthDto对象中;
      */
-    @PostMapping("/auth-grant")
+    @PutMapping("/auth-grant")
     public Result assignAuth(@RequestBody AssignAuthDto assignAuthDto) {
         //执行业务
         authService.assignAuth(assignAuthDto);
