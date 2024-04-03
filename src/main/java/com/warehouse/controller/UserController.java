@@ -39,8 +39,7 @@ public class UserController {
 
     /**
      * 加载当前登录用户权限(菜单)树的url接口/user/auth-list
-     *
-     * @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String clientToken
+     * @param clientToken token
      * 将请求头Token的值即前端归还的token,赋值给请求处理方法的参数String clientToken
      */
     @GetMapping("/auth-list")
@@ -55,13 +54,11 @@ public class UserController {
 
     /**
      * 分页查询用户的url接口/user/user-list
-     *
      * 参数Page对象用于接收请求参数页码pageNum、每页行数pageSize;
      * 参数User对象用于接收请求参数用户名userCode、用户类型userType、用户状态userState;
-     *
      * 返回值Result对象向客户端响应组装了所有分页信息的Page对象;
      */
-    @PostMapping("/user-list")
+    @GetMapping("/user-list")
     public Result userListPage(Page page, User user) {
         //执行业务
         page = userService.queryUserPage(page, user);
@@ -71,9 +68,8 @@ public class UserController {
 
     /**
      * 添加用户的url接口/user/addUser
-     *
-     * @RequestBody User user将添加的用户信息的json串数据封装到参数User对象;
-     * @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token
+     * User user将添加的用户信息的json串数据封装到参数User对象;
+     * String token
      * 将请求头Token的值即客户端归还的token赋值给参数变量token;
      */
     @PostMapping("/addUser")
@@ -85,15 +81,13 @@ public class UserController {
         int createBy = currentUser.getUserId();
         user.setCreateBy(createBy);
         //执行业务
-        Result result = userService.saveUser(user);
-        return result;
+        return userService.saveUser(user);
     }
 
     /**
      * 修改用户状态的url接口/user/updateState
-     *
-     * @RequestBody User user将客户端传递的json数据封装到参数User对象中;
-     * @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token
+     * User user将客户端传递的json数据封装到参数User对象中;
+     * String token
      * 将请求头Token的值即客户端归还的token赋值给参数变量token;
      */
     @PostMapping("/updateState")
@@ -109,10 +103,9 @@ public class UserController {
         user.setUpdateTime(new Date());
 
         //执行业务
-        Result result = userService.updateUserState(user);
 
         //响应
-        return result;
+        return userService.updateUserState(user);
     }
 
     /**
@@ -128,8 +121,7 @@ public class UserController {
 
     /**
      * 给用户分配角色的url接口/user/assignRole
-     *
-     * @RequestBody AssignRoleDto assignRoleDto将请求传递的json数据
+     * AssignRoleDto assignRoleDto将请求传递的json数据
      * 封装到参数AssignRoleDto对象中;
      */
     @PostMapping("/assignRole")
@@ -153,9 +145,8 @@ public class UserController {
 
     /**
      * 修改用户的url接口/user/updateUser
-     *
-     * @RequestBody User user将请求传递的json数据封装到参数User对象;
-     * @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token
+     * User user将请求传递的json数据封装到参数User对象;
+     * String token
      * 将请求头Token的值即客户端归还的token赋值给参数变量token;
      */
     @PostMapping("/updateUser")
@@ -168,11 +159,7 @@ public class UserController {
 
         user.setUpdateBy(updateBy);
 
-        //执行业务
-        Result result = userService.updateUserName(user);
-
-        //响应
-        return result;
+        return userService.updateUserName(user);
     }
 
     /**
@@ -180,9 +167,7 @@ public class UserController {
      */
     @PostMapping("/updatePwd/{userId}")
     public Result resetPassWord(@PathVariable Integer userId) {
-        //执行业务
-        Result result = userService.resetPwd(userId);
         //响应
-        return result;
+        return userService.resetPwd(userId);
     }
 }

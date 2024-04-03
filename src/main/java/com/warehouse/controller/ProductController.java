@@ -141,7 +141,7 @@ public class ProductController {
      *
      * 返回值Result对象向客户端响应组装了所有分页信息的Page对象;
      */
-    @PostMapping("/product-page-list")
+    @GetMapping("/product-page-list")
     public Result productPageList(Page page, Product product) {
         //执行业务
         page = productService.queryProductPage(page, product);

@@ -74,7 +74,7 @@ public class OutStoreController {
      *
      * 返回值Result对象向客户端响应组装了所有分页信息的Page对象;
      */
-    @PostMapping("/outstore-page-list")
+    @GetMapping("/outstore-page-list")
     public Result outStorePageList(Page page, OutStore outStore) {
         //执行业务
         page = outStoreService.outStorePage(page, outStore);

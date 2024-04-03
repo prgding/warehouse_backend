@@ -26,8 +26,6 @@ public class ServletConfig {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
         //创建SecurityFilter对象
         SecurityFilter securityFilter = new SecurityFilter();
-        //给SecurityFilter对象注入redis模板
-        securityFilter.setRedisTemplate(redisTemplate);
         //注册SecurityFilter
         filterRegistrationBean.setFilter(securityFilter);
         //配置SecurityFilter拦截所有请求

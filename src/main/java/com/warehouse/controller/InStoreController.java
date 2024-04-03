@@ -46,7 +46,7 @@ public class InStoreController {
      *
      * 返回值Result对象向客户端响应组装了所有分页信息的Page对象;
      */
-    @PostMapping("/instore-page-list")
+    @GetMapping("/instore-page-list")
     @ApiOperation("分页查询入库单")
     public Result inStorePageList(Page page, InStore inStore) {
         //执行业务

@@ -28,7 +28,7 @@ public class StoreController {
      *
      * 返回值Result对象向客户端响应组装了所有分页信息的Page对象;
      */
-    @PostMapping("/store-page-list")
+    @GetMapping("/store-page-list")
     public Result storePageList(Page page, Store store) {
         //执行业务
         page = storeService.queryStorePage(page, store);

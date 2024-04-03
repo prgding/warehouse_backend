@@ -1,5 +1,6 @@
 package com.warehouse.controller;
 
+import cn.hutool.jwt.JWT;
 import com.warehouse.entity.LoginUser;
 import com.warehouse.entity.Result;
 import com.warehouse.entity.User;
@@ -10,8 +11,11 @@ import com.warehouse.utils.TokenUtils;
 import com.warehouse.utils.WarehouseConstants;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 @RestController
 @Api(tags = "03-登录管理")
@@ -26,6 +30,9 @@ public class LoginController {
 
     //注入TokenUtils
     private final TokenUtils tokenUtils;
+
+    @Value("${warehouse.expire-time}")
+    private int expireTime;
 
     /**
      * 登录的url接口/login
@@ -42,16 +49,25 @@ public class LoginController {
 		/*
 		  校验用户名密码:
 		 */
-        //根据用户名查询用户
+        //根据用户编号查询用户
         User user = userService.findUserByCode(loginUser.getUserCode());
-        if (user != null) {//查到了用户
-            if (user.getUserState().equals(WarehouseConstants.USER_STATE_PASS)) {//查到的用户状态是已审核
+        //查到了用户
+        if (user != null) {
+            //查到的用户状态是已审核
+            if (user.getUserState().equals(WarehouseConstants.USER_STATE_PASS)) {
                 //将用户录入的密码进行加密
                 String password = DigestUtil.hmacSign(loginUser.getUserPwd());
-                if (password.equals(user.getUserPwd())) {//查到的用户的密码和用户录入的密码相同
+                //查到的用户的密码和用户录入的密码相同
+                if (password.equals(user.getUserPwd())) {
                     //生成token并响应给前端
-                    CurrentUser currentUser = new CurrentUser(user.getUserId(), user.getUserCode(), user.getUserName());
-                    String token = tokenUtils.loginSign(currentUser, user.getUserPwd());
+                    String token = JWT.create()
+                            .setPayload("userId", user.getUserId())
+                            .setPayload("userCode", user.getUserCode())
+                            .setPayload("userName", user.getUserName())
+                            .setIssuedAt(new Date())
+                            .setExpiresAt(new Date(System.currentTimeMillis() + expireTime))
+                            .setKey(user.getUserCode().getBytes())
+                            .sign();
                     return Result.ok("登录成功！", token);
                 } else {//查到的用户的密码和用户录入的密码不同
                     return Result.err(Result.CODE_ERR_BUSINESS, "密码不正确！");
@@ -67,7 +83,7 @@ public class LoginController {
     /**
      * 获取当前登录用户信息的url接口/curr-user
      *
-     * @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String clientToken
+     * @param clientToken
      * 将请求头Token的值即前端归还的token,赋值给请求处理方法的参数String clientToken
      */
     @GetMapping("/curr-user")
@@ -80,7 +96,7 @@ public class LoginController {
     /**
      * 登出的url接口/logout
      *
-     * @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String clientToken
+     * @param clientToken
      * 将请求头Token的值即前端归还的token,赋值给请求处理方法的参数String clientToken
      */
     @DeleteMapping("/logout")

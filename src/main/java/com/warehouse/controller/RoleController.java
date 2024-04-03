@@ -50,7 +50,7 @@ public class RoleController {
      *
      * 返回值Result对象向客户端响应组装了所有分页信息的Page对象;
      */
-    @PostMapping("/role-page-list")
+    @GetMapping("/role-page-list")
     public Result roleListPage(Page page, Role role) {
 
         //执行业务

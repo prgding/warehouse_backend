@@ -66,7 +66,7 @@ public class PurchaseController {
      *
      * 返回值Result对象向客户端响应组装了所有分页信息的Page对象;
      */
-    @PostMapping("/purchase-page-list")
+    @GetMapping("/purchase-page-list")
     public Result purchasePageList(Page page, Purchase purchase) {
         //执行业务
         page = purchaseService.queryPurchasePage(page, purchase);

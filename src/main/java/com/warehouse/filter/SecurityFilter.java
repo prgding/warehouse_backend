@@ -1,10 +1,13 @@
 package com.warehouse.filter;
 
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.jwt.JWT;
+import cn.hutool.jwt.JWTValidator;
+import cn.hutool.jwt.signers.JWTSignerUtil;
 import com.alibaba.fastjson.JSON;
 import com.warehouse.entity.Result;
 import com.warehouse.utils.WarehouseConstants;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.util.StringUtils;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -17,16 +20,8 @@ import java.util.List;
 /**
  * 登录限制过滤器:
  */
+@Slf4j
 public class SecurityFilter implements Filter {
-
-    //将redis模板定义为其成员变量
-    private StringRedisTemplate redisTemplate;
-
-    //成员变量redis模板的set方法
-    public void setRedisTemplate(StringRedisTemplate redisTemplate) {
-        this.redisTemplate = redisTemplate;
-    }
-
     /**
      * 过滤器拦截到请求执行的方法:
      */
@@ -39,7 +34,7 @@ public class SecurityFilter implements Filter {
 
         //获取请求url接口
         String path = request.getServletPath();
-        System.out.print("path = " + path + " ");
+        log.info("path = " + path + " ");
         /*
           白名单请求都直接放行:
          */
@@ -49,15 +44,10 @@ public class SecurityFilter implements Filter {
         urlList.add("/logout");
         //对上传图片的url接口/product/img-upload的请求直接放行
         urlList.add("/product/img-upload");
-        // swagger-ui.html
         //对static下的/img/upload中的静态资源图片的访问直接放行
-        //if (urlList.contains(path) || path.contains("/img/upload") || path.contains("/webjars") || path.contains("/swagger") ) {
-        //    System.out.println("白名单请求");
-        //    chain.doFilter(request, response);
-        //    return;
-        //}
-        if (!path.isEmpty()) {
-            System.out.println("白名单请求");
+        if (urlList.contains(path) || path.contains("/img/upload") || path.contains("/webjars")
+                || path.contains("/swagger") || path.contains("/v2/api-docs")) {
+            log.info("白名单请求");
             chain.doFilter(request, response);
             return;
         }
@@ -66,21 +56,26 @@ public class SecurityFilter implements Filter {
          */
         //拿到前端归还的token
         String clientToken = request.getHeader(WarehouseConstants.HEADER_TOKEN_NAME);
-        //校验token,校验通过请求放行
-        if (StringUtils.hasText(clientToken) && redisTemplate.hasKey(clientToken)) {
-            System.out.println("校验通过");
-            chain.doFilter(request, response);
+
+        try {
+            JWTValidator.of(clientToken)
+                    .validateDate(DateUtil.date())
+                    .validateAlgorithm(JWTSignerUtil.hs256(JWT.of(clientToken).getPayload("userCode").toString().getBytes()));
+        } catch (Exception e) {
+            log.info("校验失败");
+            //校验失败,向前端响应失败的Result对象转成的json串
+            Result result = Result.err(Result.CODE_ERR_UNLOGINED, "请登录！");
+            String jsonStr = JSON.toJSONString(result);
+            response.setContentType("application/json;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.print(jsonStr);
+            out.flush();
+            out.close();
             return;
         }
-        //校验失败,向前端响应失败的Result对象转成的json串
-        System.out.println("校验失败");
-        Result result = Result.err(Result.CODE_ERR_UNLOGINED, "请登录！");
-        String jsonStr = JSON.toJSONString(result);
-        response.setContentType("application/json;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        out.print(jsonStr);
-        out.flush();
-        out.close();
-    }
 
+        //校验token,校验通过请求放行
+        log.info("校验通过");
+        chain.doFilter(request, response);
+    }
 }
