@@ -13,10 +13,10 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class CurrentUser {
-
-    private int userId;//用户id
-
-    private String userCode;//用户名
-
-    private String userName;//真实姓名
+    //用户id
+    private int userId;
+    //用户编号
+    private String userCode;
+    //用户姓名
+    private String userName;
 }
