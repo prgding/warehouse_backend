@@ -90,7 +90,7 @@ public class UserController {
      * String token
      * 将请求头Token的值即客户端归还的token赋值给参数变量token;
      */
-    @PostMapping("/updateState")
+    @PutMapping("/updateState")
     public Result updateUserState(@RequestBody User user,
                                   @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token) {
         //获取当前登录的用户
@@ -149,7 +149,7 @@ public class UserController {
      * String token
      * 将请求头Token的值即客户端归还的token赋值给参数变量token;
      */
-    @PostMapping("/updateUser")
+    @PutMapping("/updateUser")
     public Result updateUser(@RequestBody User user,
                              @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token) {
         //获取当前登录的用户
