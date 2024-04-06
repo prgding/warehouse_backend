@@ -5,6 +5,7 @@ import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.core.lang.Console;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 @RestController
 @RequiredArgsConstructor
 @Api(tags = "12-验证码管理")
+@Slf4j
 public class VerificationCodeController {
 
     //注入redis模板
@@ -48,13 +50,13 @@ public class VerificationCodeController {
             response.setContentType("image/jpeg");
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("验证码生成失败");
         } finally {
             if (out != null) {
                 try {
                     out.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    log.error("验证码生成失败");
                 }
             }
         }

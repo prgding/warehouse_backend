@@ -55,7 +55,6 @@ public class ProductController {
 
     /**
      * 查询所有仓库的url接口/product/store-list
-     *
      * 返回值Result对象给客户端响应查询到的List<Store>;
      */
     @GetMapping("/store-list")
@@ -68,7 +67,6 @@ public class ProductController {
 
     /**
      * 查询所有品牌的url接口/product/brand-list
-     *
      * 返回值Result对象给客户端响应查询到的List<Brand>;
      */
     @GetMapping("/brand-list")
@@ -81,7 +79,6 @@ public class ProductController {
 
     /**
      * 查询所有商品分类树的url接口/product/category-tree
-     *
      * 返回值Result对象给客户端响应查询到的所有商品分类树List<ProductType>;
      */
     @GetMapping("/category-tree")
@@ -94,7 +91,6 @@ public class ProductController {
 
     /**
      * 查询所有供应商的url接口/product/supply-list
-     *
      * 返回值Result对象给客户端响应查询到的List<Supply>;
      */
     @GetMapping("/supply-list")
@@ -107,7 +103,6 @@ public class ProductController {
 
     /**
      * 查询所有产地的url接口/product/place-list
-     *
      * 返回值Result对象给客户端响应查询到的List<Place>;
      */
     @GetMapping("/place-list")
@@ -120,7 +115,6 @@ public class ProductController {
 
     /**
      * 查询所有单位的url接口/product/unit-list
-     *
      * 返回值Result对象给客户端响应查询到的List<Unit>;
      */
     @GetMapping("/unit-list")
@@ -133,12 +127,10 @@ public class ProductController {
 
     /**
      * 分页查询商品的url接口/product/product-page-list
-     *
-     * 参数Page对象用于接收请求参数页码pageNum、每页行数pageSize;
-     * 参数Product对象用于接收请求参数仓库id storeId、商品名称productName、
+     * @param page 对象用于接收请求参数页码pageNum、每页行数pageSize;
+     * @param product 对象用于接收请求参数仓库id storeId、商品名称productName、
      * 品牌名称brandName、分类名称typeName、供应商名称supplyName、产地名称
      * placeName、上下架状态upDownState、是否过期isOverDate;
-     *
      * 返回值Result对象向客户端响应组装了所有分页信息的Page对象;
      */
     @GetMapping("/product-page-list")
@@ -151,10 +143,8 @@ public class ProductController {
 
     /**
      * 上传图片的url接口/product/img-upload
-     *
      * 参数MultipartFile file对象封装了上传的图片;
-     *
-     * @CrossOrigin表示该url接口允许跨域请求;
+     * CrossOrigin 表示该url接口允许跨域请求;
      */
     @CrossOrigin
     @PostMapping("/img-upload")
@@ -180,8 +170,8 @@ public class ProductController {
     /**
      * 添加商品的url接口/product/product-add
      *
-     * @RequestBody Product product将添加的商品信息的json串数据封装到参数Product对象;
-     * @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token
+     * @param product 将添加的商品信息的json串数据封装到参数Product对象;
+     * @param token
      * 将请求头Token的值即客户端归还的token赋值给参数变量token;
      */
     @PostMapping("/product-add")
@@ -193,25 +183,17 @@ public class ProductController {
         //获取当前登录的用户id,即添加商品的用户id
         int createBy = currentUser.getUserId();
         product.setCreateBy(createBy);
-
-        //执行业务
-        Result result = productService.saveProduct(product);
-
-        //响应
-        return result;
+        return productService.saveProduct(product);
     }
 
     /**
      * 修改商品上下架状态的url接口/product/state-change
      *
-     * @RequestBody Product product用于接收并封装请求json数据;
+     * @param product 用于接收并封装请求json数据;
      */
     @PutMapping("/state-change")
     public Result changeProductState(@RequestBody Product product) {
-        //执行业务
-        Result result = productService.updateProductState(product);
-        //响应
-        return result;
+        return productService.updateProductState(product);
     }
 
     /**
@@ -219,20 +201,17 @@ public class ProductController {
      */
     @DeleteMapping("/product-delete/{productId}")
     public Result deleteProduct(@PathVariable Integer productId) {
-        //执行业务
-        Result result = productService.deleteProduct(productId);
-        //响应
-        return result;
+        return productService.deleteProduct(productId);
     }
 
     /**
      * 修改商品的url接口/product/product-update
      *
-     * @RequestBody Product product将请求传递的json数据封装到参数Product对象;
-     * @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token
+     * @param product 将请求传递的json数据封装到参数Product对象;
+     * @param token
      * 将请求头Token的值即客户端归还的token赋值给参数变量token;
      */
-    @PostMapping("/product-update")
+    @PutMapping("/product-update")
     public Result updateProduct(@RequestBody Product product,
                                 @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token) {
 
@@ -242,10 +221,6 @@ public class ProductController {
         int updateBy = currentUser.getUserId();
         product.setUpdateBy(updateBy);
 
-        //执行业务
-        Result result = productService.updateProduct(product);
-
-        //响应
-        return result;
+        return productService.updateProduct(product);
     }
 }

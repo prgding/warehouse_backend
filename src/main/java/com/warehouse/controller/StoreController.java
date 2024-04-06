@@ -21,11 +21,9 @@ public class StoreController {
 
     /**
      * 分页查询仓库的url接口/store/store-page-list
-     *
      * 参数Page对象用于接收请求参数页码pageNum、每页行数pageSize;
      * 参数Store对象用于接收请求参数仓库名称storeName、仓库地址storeAddress、
      * 联系人concat、联系电话phone;
-     *
      * 返回值Result对象向客户端响应组装了所有分页信息的Page对象;
      */
     @GetMapping("/store-page-list")
@@ -42,57 +40,51 @@ public class StoreController {
     @PostMapping("/store-num-check")
     public Result checkStoreNum(String storeNum) {
         //执行业务
-        Result result = storeService.checkStoreNum(storeNum);
         //响应
-        return result;
+        return storeService.checkStoreNum(storeNum);
     }
 
     /**
      * 添加仓库的url接口/store/store-add
      *
-     * @RequestBody Store store将请求传递的json数据封装到参数Store对象;
+     * @param store 将请求传递的json数据封装到参数Store对象;
      */
     @PostMapping("/store-add")
     public Result addStore(@RequestBody Store store) {
         //执行业务
-        Result result = storeService.saveStore(store);
         //响应
-        return result;
+        return storeService.saveStore(store);
     }
 
     /**
      * 修改仓库的url接口/store/store-update
      *
-     * @RequestBody Store store将请求传递的json数据封装到参数Store对象;
+     * @param store 将请求传递的json数据封装到参数Store对象;
      */
     @PostMapping("/store-update")
     public Result updateStore(@RequestBody Store store) {
         //执行业务
-        Result result = storeService.updateStore(store);
         //响应
-        return result;
+        return storeService.updateStore(store);
     }
 
     /**
      * 删除仓库的url接口/store/store-delete/{storeId}
      *
-     * @PathVariable Integer storeId将路径占位符storeId的值赋值给参数变量storeId;
+     * @param storeId 将路径占位符storeId的值赋值给参数变量storeId;
      */
     @DeleteMapping("/store-delete/{storeId}")
     public Result deleteStore(@PathVariable Integer storeId) {
         //执行业务
-        Result result = storeService.deleteStore(storeId);
         //响应
-        return result;
+        return storeService.deleteStore(storeId);
     }
 
     /**
      * 导出数据的url接口/store/exportTable
-     *
      * 参数Page对象用于接收请求参数页码pageNum、每页行数pageSize;
      * 参数Store对象用于接收请求参数仓库名称storeName、仓库地址storeAddress、
      * 联系人concat、联系电话phone;
-     *
      * 返回值Result对象向客户端响应组装了当前页数据的List;
      */
     @PostMapping("/exportTable")

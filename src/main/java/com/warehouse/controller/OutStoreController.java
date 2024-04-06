@@ -33,8 +33,8 @@ public class OutStoreController {
     /**
      * 添加出库单的url接口/outstore/outstore-add
      *
-     * @RequestBody OutStore outStore将添加的出库单信息的json数据封装到参数OutStore对象;
-     * @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token
+     * @param outStore 将添加的出库单信息的json数据封装到参数OutStore对象;
+     * @param token
      * 将请求头Token的值即客户端归还的token赋值给参数变量token;
      */
     @PostMapping("/outstore-add")
@@ -47,11 +47,7 @@ public class OutStoreController {
         int createBy = currentUser.getUserId();
         outStore.setCreateBy(createBy);
 
-        //执行业务
-        Result result = outStoreService.saveOutStore(outStore);
-
-        //响应
-        return result;
+        return outStoreService.saveOutStore(outStore);
     }
 
     /**
@@ -67,11 +63,9 @@ public class OutStoreController {
 
     /**
      * 分页查询出库单的url接口/outstore/outstore-page-list
-     *
      * 参数Page对象用于接收请求参数页码pageNum、每页行数pageSize;
      * 参数OutStore对象用于接收请求参数仓库id storeId、商品名称productName、
      * 是否出库isOut、起止时间startTime和endTime;
-     *
      * 返回值Result对象向客户端响应组装了所有分页信息的Page对象;
      */
     @GetMapping("/outstore-page-list")
@@ -87,9 +81,6 @@ public class OutStoreController {
      */
     @PostMapping("/outstore-confirm")
     public Result confirmOutStore(@RequestBody OutStore outStore) {
-        //执行业务
-        Result result = outStoreService.confirmOutStore(outStore);
-        //响应
-        return result;
+        return outStoreService.confirmOutStore(outStore);
     }
 }

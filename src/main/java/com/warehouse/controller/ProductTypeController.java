@@ -35,47 +35,37 @@ public class ProductTypeController {
     @PostMapping("/verify-type-code")
     public Result checkTypeCode(String typeCode) {
         //执行业务
-        Result result = productTypeService.queryTypeByCode(typeCode);
         //响应
-        return result;
+        return productTypeService.queryTypeByCode(typeCode);
     }
 
     /**
      * 添加商品分类的url接口/productCategory/type-add
      *
-     * @RequestBody ProductType productType将请求传递的json数据封装到参数ProductType对象;
+     * @param productType 将请求传递的json数据封装到参数ProductType对象;
      */
     @PostMapping("/type-add")
     public Result addProductType(@RequestBody ProductType productType) {
-        //执行业务
-        Result result = productTypeService.saveProductType(productType);
-        //响应
-        return result;
+        return productTypeService.saveProductType(productType);
     }
 
     /**
      * 删除商品分类的url接口/productCategory/type-delete/{typeId}
      *
-     * @PathVariable Integer typeId将路径占位符typeId的值赋值给参数变量typeId;
+     * @param typeId 将路径占位符typeId的值赋值给参数变量typeId;
      */
     @DeleteMapping("/type-delete/{typeId}")
     public Result deleteType(@PathVariable Integer typeId) {
-        //执行业务
-        Result result = productTypeService.removeProductType(typeId);
-        //响应
-        return result;
+        return productTypeService.removeProductType(typeId);
     }
 
     /**
      * 修改商品分类的url接口/productCategory/type-update
      *
-     * @RequestBody ProductType productType将请求传递的json数据封装到参数ProductType对象;
+     * @param productType 将请求传递的json数据封装到参数ProductType对象;
      */
     @PostMapping("/type-update")
     public Result updateType(@RequestBody ProductType productType) {
-        //执行业务
-        Result result = productTypeService.updateProductType(productType);
-        //响应
-        return result;
+        return productTypeService.updateProductType(productType);
     }
 }

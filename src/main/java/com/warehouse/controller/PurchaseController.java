@@ -40,10 +40,7 @@ public class PurchaseController {
      */
     @PostMapping("/purchase-add")
     public Result addPurchase(@RequestBody Purchase purchase) {
-        //执行业务
-        Result result = purchaseService.savePurchase(purchase);
-        //响应
-        return result;
+        return purchaseService.savePurchase(purchase);
     }
 
     /**
@@ -59,11 +56,9 @@ public class PurchaseController {
 
     /**
      * 分页查询采购单的url接口/purchase/purchase-page-list
-     *
      * 参数Page对象用于接收请求参数页码pageNum、每页行数pageSize;
      * 参数Purchase对象用于接收请求参数仓库id storeId、商品名称productName、
      * 采购人buyUser、是否生成入库单isIn、起止时间startTime和endTime;
-     *
      * 返回值Result对象向客户端响应组装了所有分页信息的Page对象;
      */
     @GetMapping("/purchase-page-list")
@@ -77,34 +72,28 @@ public class PurchaseController {
     /**
      * 修改采购单的url接口/purchase/purchase-update
      *
-     * @RequestBody Purchase purchase将请求传递的json数据封装到参数Purchase对象;
+     * @param purchase 将请求传递的json数据封装到参数Purchase对象;
      */
-    @PostMapping("/purchase-update")
+    @PutMapping("/purchase-update")
     public Result updatePurchase(@RequestBody Purchase purchase) {
-        //执行业务
-        Result result = purchaseService.updatePurchase(purchase);
-        //响应
-        return result;
+        return purchaseService.updatePurchase(purchase);
     }
 
     /**
      * 删除采购单的url接口/purchase/purchase-delete/{buyId}
      *
-     * @PathVariable Integer buyId将路径占位符buyId的值赋值给参数变量buyId;
+     * @param buyId 将路径占位符buyId的值赋值给参数变量buyId;
      */
     @DeleteMapping("/purchase-delete/{buyId}")
     public Result deletePurchase(@PathVariable Integer buyId) {
-        //执行业务
-        Result result = purchaseService.deletePurchase(buyId);
-        //响应
-        return result;
+        return purchaseService.deletePurchase(buyId);
     }
 
     /**
      * 添加入库单的url接口/purchase/in-warehouse-record-add
      *
-     * @RequestBody Purchase purchase将请求传递的json数据封装到参数Purchase对象;
-     * @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token
+     * @param purchase 将请求传递的json数据封装到参数Purchase对象;
+     * @param token
      * 将请求头Token的值即客户端归还的token赋值给参数变量token;
      */
     @PostMapping("/in-warehouse-record-add")
@@ -122,10 +111,6 @@ public class PurchaseController {
         inStore.setInNum(purchase.getFactBuyNum());
         inStore.setCreateBy(createBy);
 
-        //执行业务
-        Result result = inStoreService.saveInStore(inStore, purchase.getBuyId());
-
-        //响应
-        return result;
+        return inStoreService.saveInStore(inStore, purchase.getBuyId());
     }
 }

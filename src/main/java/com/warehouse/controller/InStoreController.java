@@ -39,11 +39,9 @@ public class InStoreController {
 
     /**
      * 分页查询入库单的url接口/instore/instore-page-list
-     *
      * 参数Page对象用于接收请求参数页码pageNum、每页行数pageSize;
      * 参数InStore对象用于接收请求参数仓库id storeId、商品名称productName、
      * 起止时间startTime和endTime;
-     *
      * 返回值Result对象向客户端响应组装了所有分页信息的Page对象;
      */
     @GetMapping("/instore-page-list")
@@ -58,14 +56,11 @@ public class InStoreController {
     /**
      * 确定入库的url接口/instore/instore-confirm
      *
-     * @RequestBody InStore inStore将请求传递的json数据封装到参数InStore对象;
+     * @param inStore 将请求传递的json数据封装到参数InStore对象;
      */
-    @PostMapping("/instore-confirm")
+    @PutMapping("/instore-confirm")
     @ApiOperation("确定入库")
     public Result confirmInStore(@RequestBody InStore inStore) {
-        //执行业务
-        Result result = inStoreService.confirmInStore(inStore);
-        //响应
-        return result;
+        return inStoreService.confirmInStore(inStore);
     }
 }
