@@ -5,18 +5,18 @@ import com.warehouse.entity.Result;
 import com.warehouse.mapper.ProductMapper;
 import com.warehouse.page.Page;
 import com.warehouse.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
     //注入ProductMapper
-    @Autowired
-    private ProductMapper productMapper;
+    private final ProductMapper productMapper;
     /*
       将配置文件的file.access-path属性值注入给service的accessPath属性,
      * 其为上传的图片保存到数据库中的访问地址的目录路径/img/upload/;

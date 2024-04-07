@@ -37,7 +37,7 @@ public class StoreController {
     /**
      * 校验仓库编号是否已存在的url接口/store/store-num-check
      */
-    @PostMapping("/store-num-check")
+    @GetMapping("/store-num-check")
     public Result checkStoreNum(String storeNum) {
         //执行业务
         //响应
@@ -61,7 +61,7 @@ public class StoreController {
      *
      * @param store 将请求传递的json数据封装到参数Store对象;
      */
-    @PostMapping("/store-update")
+    @PutMapping("/store-update")
     public Result updateStore(@RequestBody Store store) {
         //执行业务
         //响应

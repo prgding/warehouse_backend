@@ -69,9 +69,9 @@ public class UserServiceImp implements UserService {
 
     //根据用户id删除用户的业务方法
     @Override
-    public int deleteUserById(Integer userId) {
+    public void deleteUserById(Integer userId) {
         //根据用户id修改用户状态为删除状态
-        return userMapper.setUserDelete(userId);
+        userMapper.setUserDelete(userId);
     }
 
     //修改用户昵称的业务方法

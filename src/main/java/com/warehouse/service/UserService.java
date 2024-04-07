@@ -19,7 +19,7 @@ public interface UserService {
     Result updateUserState(User user);
 
     //根据用户id删除用户的业务方法
-    int deleteUserById(Integer userId);
+    void deleteUserById(Integer userId);
 
     //修改用户昵称的业务方法
     Result updateUserName(User user);

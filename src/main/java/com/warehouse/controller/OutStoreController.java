@@ -79,7 +79,7 @@ public class OutStoreController {
     /**
      * 确定出库的url接口/outstore/outstore-confirm
      */
-    @PostMapping("/outstore-confirm")
+    @PutMapping("/outstore-confirm")
     public Result confirmOutStore(@RequestBody OutStore outStore) {
         return outStoreService.confirmOutStore(outStore);
     }

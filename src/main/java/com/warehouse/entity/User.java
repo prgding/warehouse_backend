@@ -1,7 +1,9 @@
 package com.warehouse.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.util.Date;
@@ -11,6 +13,8 @@ import java.util.Date;
  */
 @Data
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     private int userId;//用户id
@@ -35,27 +39,8 @@ public class User {
 
     private int updateBy;//修改人id
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;//修改时间
 
     private String getCode;//追加的属性--创建人
-
-    public User() {
-
-    }
-
-    public User(int userId, String userCode, String userName, String userPwd,
-                String userType, String userState, String isDelete, int createBy,
-                Date createTime, int updateBy, Date updateTime) {
-        this.userId = userId;
-        this.userCode = userCode;
-        this.userName = userName;
-        this.userPwd = userPwd;
-        this.userType = userType;
-        this.userState = userState;
-        this.isDelete = isDelete;
-        this.createBy = createBy;
-        this.createTime = createTime;
-        this.updateBy = updateBy;
-        this.updateTime = updateTime;
-    }
 }

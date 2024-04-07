@@ -1,9 +1,7 @@
 package com.warehouse.controller;
 
-import com.warehouse.dto.AssignRoleDto;
 import com.warehouse.entity.Auth;
 import com.warehouse.entity.Result;
-import com.warehouse.entity.Role;
 import com.warehouse.entity.User;
 import com.warehouse.page.Page;
 import com.warehouse.service.AuthService;
@@ -102,34 +100,8 @@ public class UserController {
         user.setUpdateBy(updateBy);
         user.setUpdateTime(new Date());
 
-        //执行业务
-
         //响应
         return userService.updateUserState(user);
-    }
-
-    /**
-     * 查询用户已分配的角色的url接口/user/user-role-list/{userId}
-     */
-    @PostMapping("/user-role-list/{userId}")
-    public Result userRoleList(@PathVariable Integer userId) {
-        //执行业务
-        List<Role> roleList = roleService.queryRolesByUserId(userId);
-        //响应
-        return Result.ok(roleList);
-    }
-
-    /**
-     * 给用户分配角色的url接口/user/assignRole
-     * AssignRoleDto assignRoleDto将请求传递的json数据
-     * 封装到参数AssignRoleDto对象中;
-     */
-    @PostMapping("/assignRole")
-    public Result assignRole(@RequestBody AssignRoleDto assignRoleDto) {
-        //执行业务
-        roleService.assignRole(assignRoleDto);
-        //响应
-        return Result.ok("分配角色成功！");
     }
 
     /**
@@ -141,6 +113,42 @@ public class UserController {
         userService.deleteUserById(userId);
         //响应
         return Result.ok("用户删除成功！");
+    }
+
+    @DeleteMapping("/deleteUserList")
+    public Result deleteUser(@RequestBody List<Integer> ids) {
+        //执行业务
+        for (Integer id : ids) {
+            userService.deleteUserById(id);
+        }
+        //响应
+        return Result.ok("用户删除成功！");
+    }
+
+    @PutMapping("/enableUserList")
+    public Result enableUserList(@RequestBody List<Integer> ids) {
+        //执行业务
+        for (Integer id : ids) {
+            User user = new User();
+            user.setUserId(id);
+            user.setUserState("1");
+            userService.updateUserState(user);
+        }
+        //响应
+        return Result.ok("用户启用成功！");
+    }
+
+    @PutMapping("disableUserList")
+    public Result disableUserList(@RequestBody List<Integer> ids) {
+        //执行业务
+        for (Integer id : ids) {
+            User user = new User();
+            user.setUserId(id);
+            user.setUserState("0");
+            userService.updateUserState(user);
+        }
+        //响应
+        return Result.ok("用户禁用成功！");
     }
 
     /**

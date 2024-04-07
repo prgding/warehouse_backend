@@ -204,6 +204,36 @@ public class ProductController {
         return productService.deleteProduct(productId);
     }
 
+    @DeleteMapping("product-list-delete")
+    public Result deleteProductList(@RequestBody List<Integer> productIds) {
+        for (Integer productId : productIds) {
+            productService.deleteProduct(productId);
+        }
+        return Result.ok("商品删除成功！");
+    }
+
+    @PutMapping("product-list-up")
+    public Result upProductList(@RequestBody List<Integer> productIds) {
+        for (Integer productId : productIds) {
+            Product product = new Product();
+            product.setProductId(productId);
+            product.setUpDownState("1");
+            productService.updateProductState(product);
+        }
+        return Result.ok("商品上架成功！");
+    }
+
+    @PutMapping("product-list-down")
+    public Result downProductList(@RequestBody List<Integer> productIds) {
+        for (Integer productId : productIds) {
+            Product product = new Product();
+            product.setProductId(productId);
+            product.setUpDownState("0");
+            productService.updateProductState(product);
+        }
+        return Result.ok("商品下架成功！");
+    }
+
     /**
      * 修改商品的url接口/product/product-update
      *
