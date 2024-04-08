@@ -19,4 +19,6 @@ public class CurrentUser {
     private String userCode;
     //用户姓名
     private String userName;
+    // 是否是管理员
+    private String isAdmin;
 }

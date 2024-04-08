@@ -29,6 +29,8 @@ public class User {
 
     private String userState;//用户状态
 
+    private String isAdmin;//是否是管理员
+
     private String isDelete;//删除状态
 
     private int createBy;//创建人id

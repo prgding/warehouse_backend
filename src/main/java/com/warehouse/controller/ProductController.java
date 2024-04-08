@@ -32,12 +32,6 @@ public class ProductController {
     //注入ProductTypeService
     private final ProductTypeService productTypeService;
 
-    //注入SupplyService
-    private final SupplyService supplyService;
-
-    //注入PlaceService
-    private final PlaceService placeService;
-
     //注入UnitService
     private final UnitService unitService;
 
@@ -66,18 +60,6 @@ public class ProductController {
     }
 
     /**
-     * 查询所有品牌的url接口/product/brand-list
-     * 返回值Result对象给客户端响应查询到的List<Brand>;
-     */
-    @GetMapping("/brand-list")
-    public Result brandList() {
-        //执行业务
-        List<Brand> brandList = brandService.queryAllBrand();
-        //响应
-        return Result.ok(brandList);
-    }
-
-    /**
      * 查询所有商品分类树的url接口/product/category-tree
      * 返回值Result对象给客户端响应查询到的所有商品分类树List<ProductType>;
      */
@@ -87,30 +69,6 @@ public class ProductController {
         List<ProductType> typeTreeList = productTypeService.allProductTypeTree();
         //响应
         return Result.ok(typeTreeList);
-    }
-
-    /**
-     * 查询所有供应商的url接口/product/supply-list
-     * 返回值Result对象给客户端响应查询到的List<Supply>;
-     */
-    @GetMapping("/supply-list")
-    public Result supplyList() {
-        //执行业务
-        List<Supply> supplyList = supplyService.queryAllSupply();
-        //响应
-        return Result.ok(supplyList);
-    }
-
-    /**
-     * 查询所有产地的url接口/product/place-list
-     * 返回值Result对象给客户端响应查询到的List<Place>;
-     */
-    @GetMapping("/place-list")
-    public Result placeList() {
-        //执行业务
-        List<Place> placeList = placeService.queryAllPlace();
-        //响应
-        return Result.ok(placeList);
     }
 
     /**

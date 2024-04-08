@@ -1,116 +1,128 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.warehouse.mapper.UserMapper">
+    <resultMap type="User" id="userResult">
+        <id column="user_id" property="userId"/>
+        <result column="user_name" property="userName"/>
+        <result column="user_code" property="userCode"/>
+        <result column="user_pwd" property="userPwd"/>
+        <result column="user_type" property="userType"/>
+        <result column="user_state" property="userState"/>
+        <result column="is_delete" property="isDelete"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="getCode" property="getCode"/>
+    </resultMap>
 
-	<resultMap type="User" id="userResult">
-		<id column="user_id" property="userId" />
-		<result column="user_name" property="userName" />
-		<result column="user_code" property="userCode" />
-		<result column="user_pwd" property="userPwd" />
-		<result column="user_type" property="userType" />
-		<result column="user_state" property="userState" />
-		<result column="is_delete" property="isDelete" />
-		<result column="create_by" property="createBy" />
-		<result column="create_time" property="createTime" />
-		<result column="update_by" property="updateBy" />
-		<result column="update_time" property="updateTime" />
-		<result column="getCode" property="getCode"/>
-	</resultMap>
+    <!--public User findUserByCode(String userCode)-->
+    <select id="findUserByCode" resultMap="userResult">
+        SELECT *
+        FROM user_info
+        WHERE user_code = #{userCode}
+          and is_delete = 0
+    </select>
 
-	<!--public User findUserByCode(String userCode)-->
-	<select id="findUserByCode" resultMap="userResult">
-		SELECT * FROM user_info
-		WHERE user_code = #{userCode} and is_delete = 0
-	</select>
-
-	<!--
-	  //查询用户总行数的方法
-	  public int selectUserCount(User user)
-	-->
-	<select id="selectUserCount" resultType="integer">
-		select count(*) from user_info
-		<where>
-			<if test="userCode != null and userCode != ''">
-				and user_code like concat('%', #{userCode}, '%')
-			</if>
-			<if test="userType != null and userType != ''">
-				and user_type = #{userType}
-			</if>
-			<if test="userState != null and userState != ''">
-				and user_state = #{userState}
-			</if>
-			and is_delete = 0
-		</where>
-	</select>
+    <!--
+      //查询用户总行数的方法
+      public int selectUserCount(User user)
+    -->
+    <select id="selectUserCount" resultType="integer">
+        select count(*)
+        from user_info
+        <where>
+            <if test="userCode != null and userCode != ''">
+                and user_code like concat('%', #{userCode}, '%')
+            </if>
+            <if test="userType != null and userType != ''">
+                and user_type = #{userType}
+            </if>
+            <if test="userState != null and userState != ''">
+                and user_state = #{userState}
+            </if>
+            and is_delete = 0
+        </where>
+    </select>
 
     <!--
      //分页查询用户的方法
 	 public List<User> selectUserPage(@Param("page") Page page, @Param("user")User user)
     -->
-	<select id="selectUserPage" resultMap="userResult">
-		select t1.*, t2.user_code getCode from user_info t1, user_info t2
-		<where>
-			and t1.create_by = t2.user_id
-			<if test="user.userCode != null and user.userCode != ''">
-				and t1.user_code like concat('%', #{user.userCode}, '%')
-			</if>
-			<if test="user.userType != null and user.userType != ''">
-				and t1.user_type = #{user.userType}
-			</if>
-			<if test="user.userState != null and user.userState != ''">
-				and t1.user_state = #{user.userState}
-			</if>
-			and t1.is_delete = 0
-		</where>
-		limit #{page.limitIndex}, #{page.pageSize}
-	</select>
+    <select id="selectUserPage" resultMap="userResult">
+        select t1.*, t2.user_code getCode
+        from user_info t1,
+             user_info t2
+        <where>
+            and t1.create_by = t2.user_id
+            <if test="user.userCode != null and user.userCode != ''">
+                and t1.user_code like concat('%', #{user.userCode}, '%')
+            </if>
+            <if test="user.userType != null and user.userType != ''">
+                and t1.user_type = #{user.userType}
+            </if>
+            <if test="user.userState != null and user.userState != ''">
+                and t1.user_state = #{user.userState}
+            </if>
+            and t1.is_delete = 0
+        </where>
+        limit #{page.limitIndex}, #{page.pageSize}
+    </select>
 
-	<!--
-	  //添加用户的方法
-	  public int insertUser(User user);
-	-->
-	<insert id="insertUser">
-		insert into user_info
-		(user_name,user_code,user_pwd,user_state,is_delete,create_by,create_time)
-		values
-		(#{userName},#{userCode},#{userPwd},0,0,#{createBy},now())
-	</insert>
+    <!--
+      //添加用户的方法
+      public int insertUser(User user);
+    -->
+    <insert id="insertUser">
+        insert into user_info
+        (user_name, user_code, user_pwd, user_state, is_admin, is_delete, create_by, create_time)
+        values (#{userName}, #{userCode}, #{userPwd}, #{userState}, #{isAdmin}, 0, #{createBy}, now())
+    </insert>
 
-	<!--
-	  //根据用户id修改用户状态的方法
-	  public int updateUserState(User user)
-	-->
-	<update id="updateUserState">
-		update user_info set
-		user_state = #{userState}, update_By=#{updateBy}, update_time=#{updateTime}
-		where user_id = #{userId}
-	</update>
+    <!--
+      //根据用户id修改用户状态的方法
+      public int updateUserState(User user)
+    -->
+    <update id="updateUserState">
+        update user_info
+        set user_state = #{userState},
+            update_By=#{updateBy},
+            update_time=#{updateTime}
+        where user_id = #{userId}
+    </update>
 
-	<!--
-	  //根据用户id将用户状态修改为删除状态
-	  public int setUserDelete(Integer userId)
-	-->
-	<update id="setUserDelete">
-		update user_info set is_delete = 1 where user_id = #{userId}
-	</update>
+    <!--
+      //根据用户id将用户状态修改为删除状态
+      public int setUserDelete(Integer userId)
+    -->
+    <update id="setUserDelete">
+        update user_info
+        set is_delete = 1
+        where user_id = #{userId}
+    </update>
 
-	<!--
-	 //根据用户id修改用户昵称的方法
-	 public int updateNameById(User user)
-	-->
-	<update id="updateNameById">
-		update user_info set
-		user_name = #{userName}, update_by = #{updateBy}, update_time = now()
-		where user_id = #{userId}
-	</update>
+    <!--
+     //根据用户id修改用户昵称的方法
+     public int updateNameById(User user)
+    -->
+    <update id="updateNameById">
+        update user_info
+        set user_name   = #{userName},
+            update_by   = #{updateBy},
+            is_admin    = #{isAdmin},
+            update_time = now()
+        where user_id = #{userId}
+    </update>
 
-	<!--
-	 //根据用户id修改密码的方法
-	 public int updatePwdById(User user)
-	-->
-	<update id="updatePwdById">
-		update user_info set user_pwd = #{userPwd} where user_id = #{userId}
-	</update>
+    <!--
+     //根据用户id修改密码的方法
+     public int updatePwdById(User user)
+    -->
+    <update id="updatePwdById">
+        update user_info
+        set user_pwd = #{userPwd}
+        where user_id = #{userId}
+    </update>
 </mapper>

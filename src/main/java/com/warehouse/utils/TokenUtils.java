@@ -22,8 +22,9 @@ public class TokenUtils {
         int userId = Integer.parseInt(jwt.getPayload("userId").toString());
         String userCode = jwt.getPayload("userCode").toString();
         String userName = jwt.getPayload("userName").toString();
+        String isAdmin = jwt.getPayload("isAdmin").toString();
 
-        return new CurrentUser(userId, userCode, userName);
+        return new CurrentUser(userId, userCode, userName, isAdmin);
     }
 
 }

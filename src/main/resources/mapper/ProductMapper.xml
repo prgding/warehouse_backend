@@ -10,11 +10,10 @@
     -->
     <select id="selectProductCount" resultType="integer">
         select count(*) from
-        product t1, store t2, brand t3, product_type t4, supply t5,
-        place t6, unit t7
+        product t1, store t2, brand t3, product_type t4, unit t7
         where t1.store_id = t2.store_id and t1.brand_id = t3.brand_id
-        and t1.type_id = t4.type_id and t1.supply_id = t5.supply_id
-        and t1.place_id = t6.place_id and t1.unit_id = t7.unit_id
+        and t1.type_id = t4.type_id
+        and t1.unit_id = t7.unit_id
         <if test="storeId != null">
             and t1.store_id = #{storeId}
         </if>
@@ -26,12 +25,6 @@
         </if>
         <if test="typeName != null and typeName != ''">
             and t4.type_name like concat('%', #{typeName}, '%')
-        </if>
-        <if test="supplyName != null and supplyName != ''">
-            and t5.supply_name like concat('%', #{supplyName}, '%')
-        </if>
-        <if test="placeName != null and placeName != ''">
-            and t6.place_name like concat('%', #{placeName}, '%')
         </if>
         <if test="upDownState != null and upDownState != ''">
             and t1.up_down_state = #{upDownState}
@@ -55,18 +48,25 @@
       public List<Product> selectProductPage(@Param("page") Page page, @Param("product") Product product)
     -->
     <select id="selectProductPage" resultType="com.warehouse.entity.Product">
-        select t1.*, t2.store_name, t3.brand_name, t4.type_name,
-        t5.supply_name, t6.place_name, t7.unit_name from
-        product t1, store t2, brand t3, product_type t4, supply t5,
-        place t6, unit t7
-        where t1.store_id = t2.store_id and t1.brand_id = t3.brand_id
-        and t1.type_id = t4.type_id and t1.supply_id = t5.supply_id
-        and t1.place_id = t6.place_id and t1.unit_id = t7.unit_id
+        select t1.*,
+               t2.store_name,
+               t3.brand_name,
+               t4.type_name,
+               t7.unit_name
+        from product t1,
+             store t2,
+             brand t3,
+             product_type t4,
+             unit t7
+        where t1.store_id = t2.store_id
+          and t1.brand_id = t3.brand_id
+          and t1.type_id = t4.type_id
+          and t1.unit_id = t7.unit_id
         <if test="product.storeId != null">
             and t1.store_id = #{product.storeId}
         </if>
         <if test="product.productName != null and product.productName != ''">
-            and t1.product_name like concat('%',#{product.productName},'%')
+            and t1.product_name like concat('%', #{product.productName}, '%')
         </if>
         <if test="product.brandName != null and product.brandName != ''">
             and t3.brand_name like concat('%', #{product.brandName}, '%')
@@ -74,19 +74,13 @@
         <if test="product.typeName != null and product.typeName != ''">
             and t4.type_name like concat('%', #{product.typeName}, '%')
         </if>
-        <if test="product.supplyName != null and product.supplyName != ''">
-            and t5.supply_name like concat('%', #{product.supplyName}, '%')
-        </if>
-        <if test="product.placeName != null and product.placeName != ''">
-            and t6.place_name like concat('%', #{product.placeName}, '%')
-        </if>
         <if test="product.upDownState != null and product.upDownState != ''">
             and t1.up_down_state = #{product.upDownState}
         </if>
-        <if test="product.isOverDate != null and product.isOverDate != '' and product.isOverDate==1">
+        <if test="product.isOverDate != null and product.isOverDate != '' and product.isOverDate == 1">
             and date_format(now(), '%y-%m-%d') &gt; t1.supp_date
         </if>
-        <if test="product.isOverDate != null and product.isOverDate != '' and product.isOverDate==0">
+        <if test="product.isOverDate != null and product.isOverDate != '' and product.isOverDate == 0">
             and date_format(now(), '%y-%m-%d') &lt; t1.supp_date
         </if>
         order by t1.create_time

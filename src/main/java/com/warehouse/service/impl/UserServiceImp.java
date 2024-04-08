@@ -90,7 +90,7 @@ public class UserServiceImp implements UserService {
     @Override
     public Result resetPwd(Integer userId) {
 
-        //创建User对象并保存用户id和加密后的重置密码123456
+        //创建User对象并保存用户id和加密后的重置密码 123456
         User user = new User();
         user.setUserId(userId);
         user.setUserPwd(DigestUtil.hmacSign("123456"));
@@ -98,8 +98,9 @@ public class UserServiceImp implements UserService {
         //根据用户id修改密码
         int i = userMapper.updatePwdById(user);
 
-        if (i > 0) {//密码修改成功
-            return Result.ok("密码重置成功！");
+        //密码修改成功
+        if (i > 0) {
+            return Result.ok("成功，密码重置为：123456");
         }
         //密码修改失败
         return Result.err(Result.CODE_ERR_BUSINESS, "密码重置失败！");

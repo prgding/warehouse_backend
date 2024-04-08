@@ -64,6 +64,7 @@ public class LoginController {
                             .setPayload("userId", user.getUserId())
                             .setPayload("userCode", user.getUserCode())
                             .setPayload("userName", user.getUserName())
+                            .setPayload("isAdmin", user.getIsAdmin())
                             .setIssuedAt(new Date())
                             .setExpiresAt(new Date(System.currentTimeMillis() + expireTime))
                             .setKey(user.getUserCode().getBytes())
