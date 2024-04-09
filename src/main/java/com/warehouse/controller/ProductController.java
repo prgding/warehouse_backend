@@ -27,7 +27,7 @@ public class ProductController {
     private final StoreService storeService;
 
     //注入BrandService
-    private final BrandService brandService;
+    private final ProductBrandService productBrandService;
 
     //注入ProductTypeService
     private final ProductTypeService productTypeService;

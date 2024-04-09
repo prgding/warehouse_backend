@@ -1,9 +1,9 @@
 package com.warehouse.controller;
 
-import com.warehouse.entity.Brand;
+import com.warehouse.entity.ProductBrand;
 import com.warehouse.entity.Result;
 import com.warehouse.page.Page;
-import com.warehouse.service.BrandService;
+import com.warehouse.service.ProductBrandService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -19,38 +19,38 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/brand")
 @Api(tags = "01-商品品牌管理")
-public class BrandController {
-    private final BrandService brandService;
+public class ProductBrandController {
+    private final ProductBrandService productBrandService;
 
     @GetMapping("/brand-list")
     @ApiOperation("查询所有品牌")
     public Result brandList() {
         //执行业务
-        List<Brand> brandList = brandService.queryAllBrand();
+        List<ProductBrand> productBrandList = productBrandService.queryAllBrand();
         //响应
-        return Result.ok(brandList);
+        return Result.ok(productBrandList);
     }
 
     @GetMapping("/brand-page-list")
-    public Result brandPageList(Page page, Brand brand) {
+    public Result brandPageList(Page page, ProductBrand productBrand) {
         //执行业务
-        page = brandService.queryBrandPage(page, brand);
+        page = productBrandService.queryBrandPage(page, productBrand);
         //响应
         return Result.ok(page);
     }
 
     @PostMapping("/brand-add")
-    public Result brandAdd(@RequestBody Brand brand) {
+    public Result brandAdd(@RequestBody ProductBrand productBrand) {
         //执行业务
-        brandService.saveBrand(brand);
+        productBrandService.saveBrand(productBrand);
         //响应
         return Result.ok("添加成功");
     }
 
     @PutMapping("/brand-update")
-    public Result brandUpdate(@RequestBody Brand brand) {
+    public Result brandUpdate(@RequestBody ProductBrand productBrand) {
         //执行业务
-        brandService.updateBrand(brand);
+        productBrandService.updateBrand(productBrand);
         //响应
         return Result.ok("修改成功");
     }
@@ -58,7 +58,7 @@ public class BrandController {
     @DeleteMapping("/brand-delete/{id}")
     public Result brandDelete(@PathVariable("id") Integer id) {
         //执行业务
-        brandService.deleteBrand(id);
+        productBrandService.deleteBrand(id);
         //响应
         return Result.ok("删除成功");
     }

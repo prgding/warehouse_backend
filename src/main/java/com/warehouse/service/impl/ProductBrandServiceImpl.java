@@ -1,9 +1,9 @@
 package com.warehouse.service.impl;
 
-import com.warehouse.entity.Brand;
-import com.warehouse.mapper.BrandMapper;
+import com.warehouse.entity.ProductBrand;
+import com.warehouse.mapper.ProductBrandMapper;
 import com.warehouse.page.Page;
-import com.warehouse.service.BrandService;
+import com.warehouse.service.ProductBrandService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheConfig;
@@ -17,10 +17,10 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class BrandServiceImpl implements BrandService {
+public class ProductBrandServiceImpl implements ProductBrandService {
 
     //注入BrandMapper
-    private final BrandMapper brandMapper;
+    private final ProductBrandMapper productBrandMapper;
 
     /*
       查询所有品牌的业务方法
@@ -28,35 +28,35 @@ public class BrandServiceImpl implements BrandService {
     //对查询到的所有品牌进行缓存,缓存到redis的键为all:brand
     @Cacheable(key = "'all:brand'")
     @Override
-    public List<Brand> queryAllBrand() {
+    public List<ProductBrand> queryAllBrand() {
         //查询所有品牌
-        return brandMapper.findAllBrand();
+        return productBrandMapper.findAllBrand();
     }
 
     @Override
-    public Page queryBrandPage(Page page, Brand brand) {
+    public Page queryBrandPage(Page page, ProductBrand productBrand) {
         //查询品牌总数
-        int brandCount = brandMapper.selectBrandCount(brand);
-        List<Brand> brandList = brandMapper.selectBrandPage(page, brand);
+        int brandCount = productBrandMapper.selectBrandCount(productBrand);
+        List<ProductBrand> productBrandList = productBrandMapper.selectBrandPage(page, productBrand);
 
         page.setTotalNum(brandCount);
-        page.setResultList(brandList);
+        page.setResultList(productBrandList);
         return page;
     }
 
     @Override
-    public void saveBrand(Brand brand) {
-        log.info("brand = " + brand);
-        brandMapper.saveBrand(brand);
+    public void saveBrand(ProductBrand productBrand) {
+        log.info("productBrand = " + productBrand);
+        productBrandMapper.saveBrand(productBrand);
     }
 
     @Override
-    public void updateBrand(Brand brand) {
-        brandMapper.updateBrand(brand);
+    public void updateBrand(ProductBrand productBrand) {
+        productBrandMapper.updateBrand(productBrand);
     }
 
     @Override
     public void deleteBrand(Integer id) {
-        brandMapper.deleteBrand(id);
+        productBrandMapper.deleteBrand(id);
     }
 }

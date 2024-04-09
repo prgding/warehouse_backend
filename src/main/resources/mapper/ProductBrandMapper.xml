@@ -2,19 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.warehouse.mapper.BrandMapper">
+<mapper namespace="com.warehouse.mapper.ProductBrandMapper">
     <!--
       //查询所有品牌的方法
-      public List<Brand> findAllBrand()
+      public List<ProductBrand> findAllBrand()
     -->
-    <select id="findAllBrand" resultType="com.warehouse.entity.Brand">
+    <select id="findAllBrand" resultType="com.warehouse.entity.ProductBrand">
         select *
-        from brand
+        from product_brand
     </select>
 
     <select id="selectBrandCount" resultType="int">
         select count(*)
-        from brand
+        from product_brand
         <where>
             <if test="brandName != null and brandName != ''">
                 and brand_name like concat('%', #{brandName}, '%')
@@ -28,30 +28,30 @@
         </where>
     </select>
 
-    <select id="selectBrandPage" resultType="com.warehouse.entity.Brand">
+    <select id="selectBrandPage" resultType="com.warehouse.entity.ProductBrand">
         select *
-        from brand
+        from product_brand
         <where>
-            <if test="brand.brandName != null and brand.brandName != ''">
-                and brand_name like concat('%', #{brand.brandName}, '%')
+            <if test="productBrand.brandName != null and productBrand.brandName != ''">
+                and brand_name like concat('%', #{productBrand.brandName}, '%')
             </if>
-            <if test="brand.brandInitial != null and brand.brandInitial != ''">
-                and brand_initial like concat('%', #{brand.brandInitial}, '%')
+            <if test="productBrand.brandInitial != null and productBrand.brandInitial != ''">
+                and brand_initial like concat('%', #{productBrand.brandInitial}, '%')
             </if>
-            <if test="brand.brandDesc != null and brand.brandDesc != ''">
-                and brand_desc like concat('%', #{brand.brandDesc}, '%')
+            <if test="productBrand.brandDesc != null and productBrand.brandDesc != ''">
+                and brand_desc like concat('%', #{productBrand.brandDesc}, '%')
             </if>
         </where>
         limit #{page.limitIndex}, #{page.pageSize}
     </select>
 
     <insert id="saveBrand">
-        insert into brand(brand_name, brand_initial, brand_desc)
+        insert into product_brand(brand_name, brand_initial, brand_desc)
         values(#{brandName}, #{brandInitial}, #{brandDesc})
     </insert>
 
     <update id="updateBrand">
-        update brand
+        update product_brand
         set brand_name = #{brandName},
             brand_initial = #{brandInitial},
             brand_desc = #{brandDesc}
@@ -59,7 +59,7 @@
     </update>
 
     <delete id="deleteBrand">
-        delete from brand
+        delete from product_brand
         where brand_id = #{brandId}
     </delete>
 </mapper>

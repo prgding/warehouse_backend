@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Brand implements Serializable {
+public class ProductBrand implements Serializable {
 
     private final static long serialVersionUID = 1L;
     private Integer brandId;//品牌id

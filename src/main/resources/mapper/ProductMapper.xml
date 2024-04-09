@@ -10,7 +10,7 @@
     -->
     <select id="selectProductCount" resultType="integer">
         select count(*) from
-        product t1, store t2, brand t3, product_type t4, unit t7
+        product t1, store t2, product_brand t3, product_type t4, unit t7
         where t1.store_id = t2.store_id and t1.brand_id = t3.brand_id
         and t1.type_id = t4.type_id
         and t1.unit_id = t7.unit_id
@@ -55,7 +55,7 @@
                t7.unit_name
         from product t1,
              store t2,
-             brand t3,
+             product_brand t3,
              product_type t4,
              unit t7
         where t1.store_id = t2.store_id

@@ -35,7 +35,7 @@ public class InStoreServiceImpl implements InStoreService {
         //添加入库单
         int i = inStoreMapper.insertInStore(inStore);
         if (i > 0) {
-            //根据id将采购单状态改为已入库
+            //根据id将入库单状态改为已生成
             int j = purchaseMapper.updateIsInById(buyId);
             if (j > 0) {
                 return Result.ok("入库单添加成功！");
