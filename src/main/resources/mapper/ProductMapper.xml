@@ -36,10 +36,10 @@
           查询当前时间小于product表中supp_date列的时间的商品;
         -->
         <if test="isOverDate != null and isOverDate != '' and isOverDate==1">
-            and date_format(now(), '%y-%m-%d') &gt; t1.supp_date
+            and date_format(now(), '%y-%m-%d') &gt; t1.best_before_date
         </if>
         <if test="isOverDate != null and isOverDate != '' and isOverDate==0">
-            and date_format(now(), '%y-%m-%d') &lt; t1.supp_date
+            and date_format(now(), '%y-%m-%d') &lt; t1.best_before_date
         </if>
     </select>
 
@@ -78,10 +78,10 @@
             and t1.up_down_state = #{product.upDownState}
         </if>
         <if test="product.isOverDate != null and product.isOverDate != '' and product.isOverDate == 1">
-            and date_format(now(), '%y-%m-%d') &gt; t1.supp_date
+            and date_format(now(), '%y-%m-%d') &gt; t1.best_before_date
         </if>
         <if test="product.isOverDate != null and product.isOverDate != '' and product.isOverDate == 0">
-            and date_format(now(), '%y-%m-%d') &lt; t1.supp_date
+            and date_format(now(), '%y-%m-%d') &lt; t1.best_before_date
         </if>
         order by t1.create_time
         limit #{page.limitIndex}, #{page.pageSize}
@@ -94,10 +94,10 @@
     <insert id="insertProduct">
         insert into product values
         (
-          null, #{storeId}, #{brandId}, #{productName}, #{productNum},
-          #{productInvent}, #{typeId}, #{supplyId}, #{placeId}, #{unitId},
-          #{introduce}, 0, #{inPrice}, #{salePrice}, #{memPrice}, now(),
-          null, #{createBy}, null, #{imgs}, #{productDate}, #{suppDate}
+          null, #{storeId}, #{brandId}, #{productName}, #{productCode},
+          #{productStock}, #{typeId}, #{unitId},
+          #{introduce}, 0, #{inPrice}, #{salePrice}, now(),
+          null, #{createBy}, null, #{imgs}, #{productDate}, #{bestBeforeDate}
         )
     </insert>
 
@@ -123,15 +123,24 @@
       public int updateProductById(Product product)
     -->
     <update id="updateProductById">
-       <!--商品上下架状态、创建时间、创建者字段值不用改-->
-       update product set store_id = #{storeId}, brand_id = #{brandId},
-       product_name = #{productName}, product_num = #{productNum},
-       product_invent = #{productInvent}, type_id = #{typeId},
-       supply_id = #{supplyId}, place_id = #{placeId}, unit_id = #{unitId},
-       introduce = #{introduce}, in_price = #{inPrice}, sale_price = #{salePrice},
-       mem_price = #{memPrice}, update_time = now(), update_by = #{updateBy},
-       imgs = #{imgs}, product_date = #{productDate}, supp_date = #{suppDate}
-       where product_id = #{productId}
+        <!--商品上下架状态、创建时间、创建者字段值不用改-->
+        update product
+        set store_id         = #{storeId},
+            brand_id         = #{brandId},
+            product_name     = #{productName},
+            product_code      = #{productCode},
+            product_stock   = #{productStock},
+            type_id          = #{typeId},
+            unit_id          = #{unitId},
+            introduce        = #{introduce},
+            in_price         = #{inPrice},
+            sale_price       = #{salePrice},
+            update_time      = now(),
+            update_by        = #{updateBy},
+            imgs             = #{imgs},
+            product_date     = #{productDate},
+            best_before_date = #{bestBeforeDate}
+        where product_id = #{productId}
     </update>
 
     <!--
@@ -140,7 +149,7 @@
     -->
     <update id="addInventById">
         update product set
-        product_invent = product_invent + #{param2}
+        product_stock = product_stock + #{param2}
         where product_id = #{param1}
     </update>
 

@@ -21,7 +21,7 @@
     <!--public User findUserByCode(String userCode)-->
     <select id="findUserByCode" resultMap="userResult">
         SELECT *
-        FROM user_info
+        FROM user
         WHERE user_code = #{userCode}
           and is_delete = 0
     </select>
@@ -32,7 +32,7 @@
     -->
     <select id="selectUserCount" resultType="integer">
         select count(*)
-        from user_info
+        from user
         <where>
             <if test="userCode != null and userCode != ''">
                 and user_code like concat('%', #{userCode}, '%')
@@ -53,8 +53,8 @@
     -->
     <select id="selectUserPage" resultMap="userResult">
         select t1.*, t2.user_code getCode
-        from user_info t1,
-             user_info t2
+        from user t1,
+             user t2
         <where>
             and t1.create_by = t2.user_id
             <if test="user.userCode != null and user.userCode != ''">
@@ -76,7 +76,7 @@
       public int insertUser(User user);
     -->
     <insert id="insertUser">
-        insert into user_info
+        insert into user
         (user_name, user_code, user_pwd, user_state, is_admin, is_delete, create_by, create_time)
         values (#{userName}, #{userCode}, #{userPwd}, #{userState}, #{isAdmin}, 0, #{createBy}, now())
     </insert>
@@ -86,7 +86,7 @@
       public int updateUserState(User user)
     -->
     <update id="updateUserState">
-        update user_info
+        update user
         set user_state = #{userState},
             update_By=#{updateBy},
             update_time=#{updateTime}
@@ -98,7 +98,7 @@
       public int setUserDelete(Integer userId)
     -->
     <update id="setUserDelete">
-        update user_info
+        update user
         set is_delete = 1
         where user_id = #{userId}
     </update>
@@ -108,7 +108,7 @@
      public int updateNameById(User user)
     -->
     <update id="updateNameById">
-        update user_info
+        update user
         set user_name   = #{userName},
             update_by   = #{updateBy},
             is_admin    = #{isAdmin},
@@ -121,7 +121,7 @@
      public int updatePwdById(User user)
     -->
     <update id="updatePwdById">
-        update user_info
+        update user
         set user_pwd = #{userPwd}
         where user_id = #{userId}
     </update>

@@ -27,18 +27,12 @@ public class Product {
 
     private String productName;//商品名称
 
-    private String productNum;//商品编码
+    private String productCode;//商品编码
 
-    private Integer productInvent;//商品库存
+    private Integer productStock;//商品库存
 
     private Integer typeId;//商品所属分类id
     private String typeName;//非表中字段 -- 商品所属分类名称
-
-    private Integer supplyId;//商品供应商id
-    private String supplyName;//非表中字段 -- 商品供应商名称
-
-    private Integer placeId;//商品产地id
-    private String placeName;//非表中字段 -- 商品产地名称
 
     private Integer unitId;//商品单位id
     private String unitName;//非表中字段 -- 商品单位名称
@@ -50,8 +44,6 @@ public class Product {
     private Double inPrice;//商品进价
 
     private Double salePrice;//商品售价
-
-    private Double memPrice;//商品会员价
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;//商品的创建时间
@@ -69,7 +61,7 @@ public class Product {
     private Date productDate;//商品的生产日期
 
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date suppDate;//商品的保质期
+    private Date bestBeforeDate;//商品的保质期
 
     private String isOverDate;//非表中字段 -- 商品是否过期,0未过期,1已过期
 }

@@ -4,29 +4,22 @@ import com.warehouse.entity.ProductType;
 import com.warehouse.entity.Result;
 import com.warehouse.mapper.ProductTypeMapper;
 import com.warehouse.service.ProductTypeService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-//指定缓存的名称即键的前缀,一般是@CacheConfig标注的类的全类名
-@CacheConfig(cacheNames = "com.pn.service.impl.productTypeServiceImpl")
 @Service
+@RequiredArgsConstructor
 public class productTypeServiceImpl implements ProductTypeService {
 
     //注入ProductTypeMapper
-    @Autowired
-    private ProductTypeMapper productTypeMapper;
+    private final ProductTypeMapper productTypeMapper;
 
     /*
       查询所有商品分类树的业务方法
      */
-    //对查询到的所有商品分类树进行缓存,缓存到redis的键为all:typeTree
-    @Cacheable(key = "'all:typeTree'")
     @Override
     public List<ProductType> allProductTypeTree() {
         //查询所有商品分类
@@ -67,10 +60,7 @@ public class productTypeServiceImpl implements ProductTypeService {
 
     /*
       添加商品分类的业务方法
-
-      @CacheEvict(key = "'all:typeTree'")清除所有商品分类树的缓存;
      */
-    @CacheEvict(key = "'all:typeTree'")
     @Override
     public Result saveProductType(ProductType productType) {
         //添加商品分类
@@ -84,9 +74,7 @@ public class productTypeServiceImpl implements ProductTypeService {
     /*
       删除商品分类的业务方法
 
-      @CacheEvict(key = "'all:typeTree'")清除所有商品分类树的缓存;
      */
-    @CacheEvict(key = "'all:typeTree'")
     @Override
     public Result removeProductType(Integer typeId) {
         //根据分类id删除分类及其所有子级分类
@@ -100,9 +88,7 @@ public class productTypeServiceImpl implements ProductTypeService {
     /*
       修改商品分类的业务方法
 
-      @CacheEvict(key = "'all:typeTree'")清除所有商品分类树的缓存;
      */
-    @CacheEvict(key = "'all:typeTree'")
     @Override
     public Result updateProductType(ProductType productType) {
         //根据分类id修改分类

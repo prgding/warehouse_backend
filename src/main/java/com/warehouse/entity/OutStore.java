@@ -23,8 +23,6 @@ public class OutStore {
 
     private Integer storeId;//出库单出库的商品所在仓库id
 
-    private Integer tallyId;//理货员id
-
     private Double outPrice;//商品的出库价格
 
     private Integer outNum;//出库的商品数量

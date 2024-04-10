@@ -59,7 +59,7 @@ public class OutStoreServiceImpl implements OutStoreService {
 
         //根据商品id查询商品
         Product product = productMapper.selectProductById(outStore.getProductId());
-        if (outStore.getOutNum() > product.getProductInvent()) {
+        if (outStore.getOutNum() > product.getProductStock()) {
             return Result.err(Result.CODE_ERR_BUSINESS, "商品库存不足");
         }
 

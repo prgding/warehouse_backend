@@ -1,21 +1,15 @@
 package com.warehouse.config;
 
 import com.warehouse.filter.SecurityFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.core.StringRedisTemplate;
 
 /**
  * 原生Servlet的配置类:
  */
 @Configuration
 public class ServletConfig {
-
-    //注入redis模板
-    @Autowired
-    private StringRedisTemplate redisTemplate;
 
     /**
      * 注册原生Servlet的Filter

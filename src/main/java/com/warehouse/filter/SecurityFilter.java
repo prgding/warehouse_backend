@@ -34,7 +34,6 @@ public class SecurityFilter implements Filter {
 
         //获取请求url接口
         String path = request.getServletPath();
-        log.info("path = " + path + " ");
         /*
           白名单请求都直接放行:
          */
@@ -47,7 +46,7 @@ public class SecurityFilter implements Filter {
         //对static下的/img/upload中的静态资源图片的访问直接放行
         if (urlList.contains(path) || path.contains("/img/upload") || path.contains("/webjars")
                 || path.contains("/swagger") || path.contains("/v2/api-docs")) {
-            log.info("白名单请求");
+            log.info("path = {} 白名单请求", path);
             chain.doFilter(request, response);
             return;
         }
@@ -62,7 +61,7 @@ public class SecurityFilter implements Filter {
                     .validateDate(DateUtil.date())
                     .validateAlgorithm(JWTSignerUtil.hs256(JWT.of(clientToken).getPayload("userCode").toString().getBytes()));
         } catch (Exception e) {
-            log.info("校验失败");
+            log.info("path = {} JWT校验失败", path);
             //校验失败,向前端响应失败的Result对象转成的json串
             Result result = Result.err(Result.CODE_ERR_UNLOGINED, "请登录！");
             String jsonStr = JSON.toJSONString(result);
@@ -75,7 +74,7 @@ public class SecurityFilter implements Filter {
         }
 
         //校验token,校验通过请求放行
-        log.info("校验通过");
+        log.info("path = {} JWT校验通过", path);
         chain.doFilter(request, response);
     }
 }

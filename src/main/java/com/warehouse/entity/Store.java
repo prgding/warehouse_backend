@@ -20,11 +20,11 @@ public class Store implements Serializable {
 
     private String storeName;//仓库名称
 
-    private String storeNum;//仓库编码
+    private String storeCode;//仓库编码
 
     private String storeAddress;//仓库地址
 
-    private String concat;//仓库联系人
+    private String contact;//仓库联系人
 
     private String phone;//仓库联系电话
 }

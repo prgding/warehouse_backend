@@ -30,15 +30,11 @@ public class Purchase {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date buyTime;//采购时间
 
-    private Integer supplyId;//采购单采购的商品的供应商id
-
-    private Integer placeId;//采购单采购的商品的产地id
-
     private String buyUser;//采购人
 
     private String phone;//采购人联系电话
 
-    private String isIn;//是否生成入库单,1.是,0.否
+    private String isCreated;//是否生成入库单,1.是,0.否
 
     //---------------追加属性---------------------------
 

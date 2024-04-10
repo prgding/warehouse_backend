@@ -16,5 +16,5 @@ public class Statistics {
 
     private String storeName;//仓库名称
 
-    private Integer totalInvent;//仓库商品库存数
+    private Integer totalStock;//仓库商品库存数
 }

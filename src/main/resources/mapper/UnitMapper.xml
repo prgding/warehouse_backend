@@ -12,4 +12,7 @@
         select * from unit
     </select>
 
+    <select id="selectUnitCount" resultType="int">
+        select count(*) from unit
+    </select>
 </mapper>

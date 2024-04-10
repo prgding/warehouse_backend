@@ -9,7 +9,7 @@
        public List<Statistics> statisticsStoreInvent()
      -->
     <select id="statisticsStoreInvent" resultType="com.warehouse.entity.Statistics">
-        select t1.store_id, t2.store_name, ifnull(sum(t1.product_invent),0) totalInvent
+        select t1.store_id, t2.store_name, ifnull(sum(t1.product_stock),0) totalStock
         from product t1, store t2
         where t1.store_id = t2.store_id
         group by t1.store_id, t2.store_name

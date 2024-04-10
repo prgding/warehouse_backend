@@ -8,6 +8,7 @@ import com.warehouse.utils.TokenUtils;
 import com.warehouse.utils.WarehouseConstants;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ import java.util.List;
 @RestController
 @Api(tags = "05-商品管理")
 @RequiredArgsConstructor
+@Slf4j
 public class ProductController {
 
     //注入StoreService
@@ -87,8 +89,8 @@ public class ProductController {
      * 分页查询商品的url接口/product/product-page-list
      * @param page 对象用于接收请求参数页码pageNum、每页行数pageSize;
      * @param product 对象用于接收请求参数仓库id storeId、商品名称productName、
-     * 品牌名称brandName、分类名称typeName、供应商名称supplyName、产地名称
-     * placeName、上下架状态upDownState、是否过期isOverDate;
+     * 品牌名称brandName、分类名称typeName
+     * 上下架状态upDownState、是否过期isOverDate;
      * 返回值Result对象向客户端响应组装了所有分页信息的Page对象;
      */
     @GetMapping("/product-page-list")
@@ -113,8 +115,10 @@ public class ProductController {
             File uploadDirFile = ResourceUtils.getFile(uploadPath);
             //拿到图片上传到的目录的磁盘路径
             String uploadDirPath = uploadDirFile.getAbsolutePath();
+            log.info("uploadDirPath: {}", uploadDirPath);
             //拿到图片保存到的磁盘路径
-            String fileUploadPath = uploadDirPath + "\\" + file.getOriginalFilename();
+            String fileUploadPath = uploadDirPath + "/" + file.getOriginalFilename();
+            log.info("fileUploadPath: {}", fileUploadPath);
             //保存图片
             file.transferTo(new File(fileUploadPath));
             //成功响应

@@ -24,5 +24,5 @@ public interface PurchaseMapper {
     int deletePurchaseById(Integer buyId);
 
     //根据id将采购单状态改为已入库的方法
-    int updateIsInById(Integer buyId);
+    int updateIsCreatedById(Integer buyId);
 }

@@ -14,7 +14,7 @@ import lombok.ToString;
 @ToString
 public class LoginUser {
 
-    private String userCode;//用户名
+    private String userCode;//用户编码
 
     private String userPwd;//密码
 

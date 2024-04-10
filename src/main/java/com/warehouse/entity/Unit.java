@@ -19,6 +19,4 @@ public class Unit implements Serializable {
     private Integer unitId;//单位id
 
     private String unitName;//单位
-
-    private String unitDesc;//单位描述
 }

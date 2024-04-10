@@ -6,14 +6,10 @@ import com.warehouse.page.Page;
 import com.warehouse.service.ProductBrandService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-//指定缓存的名称即键的前缀,一般是@CacheConfig标注的类的全类名
-@CacheConfig(cacheNames = "com.pn.service.impl.BrandServiceImpl")
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -25,8 +21,6 @@ public class ProductBrandServiceImpl implements ProductBrandService {
     /*
       查询所有品牌的业务方法
      */
-    //对查询到的所有品牌进行缓存,缓存到redis的键为all:brand
-    @Cacheable(key = "'all:brand'")
     @Override
     public List<ProductBrand> queryAllBrand() {
         //查询所有品牌
@@ -46,7 +40,6 @@ public class ProductBrandServiceImpl implements ProductBrandService {
 
     @Override
     public void saveBrand(ProductBrand productBrand) {
-        log.info("productBrand = " + productBrand);
         productBrandMapper.saveBrand(productBrand);
     }
 

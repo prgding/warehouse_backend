@@ -25,8 +25,8 @@
             <if test="storeAddress != null and storeAddress != ''">
                 and store_address like concat('%', #{storeAddress}, '%')
             </if>
-            <if test="concat != null and concat != ''">
-                and concat like concat('%', #{concat}, '%')
+            <if test="contact != null and contact != ''">
+                and contact like concat('%', #{contact}, '%')
             </if>
             <if test="phone != null and phone != ''">
                 and phone like concat('%', #{phone}, '%')
@@ -47,8 +47,8 @@
             <if test="store.storeAddress != null and store.storeAddress != ''">
                 and store_address like concat('%', #{store.storeAddress}, '%')
             </if>
-            <if test="store.concat != null and store.concat != ''">
-                and concat like concat('%', #{store.concat}, '%')
+            <if test="store.contact != null and store.contact != ''">
+                and contact like concat('%', #{store.contact}, '%')
             </if>
             <if test="store.phone != null and store.phone != ''">
                 and phone like concat('%', #{store.phone}, '%')
@@ -59,10 +59,10 @@
 
     <!--
       //根据仓库编号查询仓库的方法
-      public Store selectStoreByNum(String storeNum)
+      public Store selectStoreByNum(String storeCode)
     -->
     <select id="selectStoreByNum" resultType="com.warehouse.entity.Store">
-        select * from store where store_num = #{storeNum}
+        select * from store where store_code = #{storeCode}
     </select>
 
     <!--
@@ -71,8 +71,8 @@
     -->
     <insert id="insertStore">
         insert into store values(
-          null, #{storeName}, #{storeNum},
-          #{storeAddress}, #{concat}, #{phone}
+          null, #{storeName}, #{storeCode},
+          #{storeAddress}, #{contact}, #{phone}
         )
     </insert>
 
@@ -83,7 +83,7 @@
     <update id="updateStoreById">
         update store set
         store_name = #{storeName}, store_address = #{storeAddress},
-        concat = #{concat}, phone = #{phone}
+        contact = #{contact}, phone = #{phone}
         where store_id = #{storeId}
     </update>
 
