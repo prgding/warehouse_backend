@@ -10,12 +10,12 @@
     -->
     <select id="selectProductCount" resultType="integer">
         select count(*) from
-        product t1, store t2, product_brand t3, product_type t4, unit t7
-        where t1.store_id = t2.store_id and t1.brand_id = t3.brand_id
+        product t1, warehouse t2, product_brand t3, product_type t4, unit t7
+        where t1.warehouse_id = t2.warehouse_id and t1.brand_id = t3.brand_id
         and t1.type_id = t4.type_id
         and t1.unit_id = t7.unit_id
-        <if test="storeId != null">
-            and t1.store_id = #{storeId}
+        <if test="warehouseId != null">
+            and t1.warehouse_id = #{warehouseId}
         </if>
         <if test="productName != null and productName != ''">
             and t1.product_name like concat('%',#{productName},'%')
@@ -25,9 +25,6 @@
         </if>
         <if test="typeName != null and typeName != ''">
             and t4.type_name like concat('%', #{typeName}, '%')
-        </if>
-        <if test="upDownState != null and upDownState != ''">
-            and t1.up_down_state = #{upDownState}
         </if>
         <!--
           如果方法参数Product对象的isOverDate属性值为1(查询已过期商品),则查询
@@ -49,21 +46,21 @@
     -->
     <select id="selectProductPage" resultType="com.warehouse.entity.Product">
         select t1.*,
-               t2.store_name,
+               t2.warehouse_name,
                t3.brand_name,
                t4.type_name,
                t7.unit_name
         from product t1,
-             store t2,
+             warehouse t2,
              product_brand t3,
              product_type t4,
              unit t7
-        where t1.store_id = t2.store_id
+        where t1.warehouse_id = t2.warehouse_id
           and t1.brand_id = t3.brand_id
           and t1.type_id = t4.type_id
           and t1.unit_id = t7.unit_id
-        <if test="product.storeId != null">
-            and t1.store_id = #{product.storeId}
+        <if test="product.warehouseId != null">
+            and t1.warehouse_id = #{product.warehouseId}
         </if>
         <if test="product.productName != null and product.productName != ''">
             and t1.product_name like concat('%', #{product.productName}, '%')
@@ -73,9 +70,6 @@
         </if>
         <if test="product.typeName != null and product.typeName != ''">
             and t4.type_name like concat('%', #{product.typeName}, '%')
-        </if>
-        <if test="product.upDownState != null and product.upDownState != ''">
-            and t1.up_down_state = #{product.upDownState}
         </if>
         <if test="product.isOverDate != null and product.isOverDate != '' and product.isOverDate == 1">
             and date_format(now(), '%y-%m-%d') &gt; t1.best_before_date
@@ -94,21 +88,12 @@
     <insert id="insertProduct">
         insert into product values
         (
-          null, #{storeId}, #{brandId}, #{productName}, #{productCode},
+          null, #{warehouseId}, #{brandId}, #{productName}, #{productCode},
           #{productStock}, #{typeId}, #{unitId},
           #{introduce}, 0, #{inPrice}, #{salePrice}, now(),
-          null, #{createBy}, null, #{imgs}, #{productDate}, #{bestBeforeDate}
+          null, #{createBy}, null, #{imgs}, #{productionDate}, #{bestBeforeDate}
         )
     </insert>
-
-    <!--
-      //根据商品id修改商品的上下架状态
-      public int updateStateById(Product product)
-    -->
-    <update id="updateStateById">
-        update product set up_down_state = #{upDownState}
-        where product_id = #{productId}
-    </update>
 
     <!--
       //根据商品id删除商品的方法
@@ -125,7 +110,7 @@
     <update id="updateProductById">
         <!--商品上下架状态、创建时间、创建者字段值不用改-->
         update product
-        set store_id         = #{storeId},
+        set warehouse_id         = #{warehouseId},
             brand_id         = #{brandId},
             product_name     = #{productName},
             product_code      = #{productCode},
@@ -135,10 +120,8 @@
             introduce        = #{introduce},
             in_price         = #{inPrice},
             sale_price       = #{salePrice},
-            update_time      = now(),
-            update_by        = #{updateBy},
             imgs             = #{imgs},
-            product_date     = #{productDate},
+            production_date     = #{productionDate},
             best_before_date = #{bestBeforeDate}
         where product_id = #{productId}
     </update>

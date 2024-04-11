@@ -25,13 +25,11 @@ public class User {
 
     private String userPwd;//用户密码
 
-    private String userType;//用户类型
-
-    private String userState;//用户状态
-
     private String isAdmin;//是否是管理员
 
-    private String isDelete;//删除状态
+    private Integer isEnabled;//是否启用
+
+    private String isDeleted;//删除状态
 
     private int createBy;//创建人id
 
@@ -44,5 +42,4 @@ public class User {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;//修改时间
 
-    private String getCode;//追加的属性--创建人
 }

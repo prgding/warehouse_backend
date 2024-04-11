@@ -9,6 +9,7 @@ import com.warehouse.utils.TokenUtils;
 import com.warehouse.utils.WarehouseConstants;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
+@Slf4j
 @Api(tags = "11-用户管理")
 public class UserController {
 
@@ -34,6 +36,7 @@ public class UserController {
      */
     @GetMapping("/user-list")
     public Result userListPage(Page page, User user) {
+        log.info("user:{}", user);
         //执行业务
         page = userService.queryUserPage(page, user);
         //响应
@@ -54,7 +57,6 @@ public class UserController {
         //获取当前登录的用户id,即创建新用户的用户id
         int createBy = currentUser.getUserId();
         user.setCreateBy(createBy);
-        System.out.println("user = " + user);
         //执行业务
         return userService.saveUser(user);
     }
@@ -108,7 +110,7 @@ public class UserController {
         for (Integer id : ids) {
             User user = new User();
             user.setUserId(id);
-            user.setUserState("1");
+            user.setIsEnabled(1);
             userService.updateUserState(user);
         }
         //响应
@@ -121,7 +123,7 @@ public class UserController {
         for (Integer id : ids) {
             User user = new User();
             user.setUserId(id);
-            user.setUserState("0");
+            user.setIsEnabled(0);
             userService.updateUserState(user);
         }
         //响应
@@ -141,9 +143,7 @@ public class UserController {
         CurrentUser currentUser = tokenUtils.getCurrentUser(token);
         //获取当前登录的用户id -- 修改用户的用户id
         int updateBy = currentUser.getUserId();
-
         user.setUpdateBy(updateBy);
-
         return userService.updateUserName(user);
     }
 

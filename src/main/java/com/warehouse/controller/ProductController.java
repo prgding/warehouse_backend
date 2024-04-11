@@ -25,11 +25,8 @@ import java.util.List;
 @Slf4j
 public class ProductController {
 
-    //注入StoreService
-    private final StoreService storeService;
-
-    //注入BrandService
-    private final ProductBrandService productBrandService;
+    //注入WarehouseService
+    private final WarehouseService warehouseService;
 
     //注入ProductTypeService
     private final ProductTypeService productTypeService;
@@ -50,15 +47,15 @@ public class ProductController {
     private String uploadPath;
 
     /**
-     * 查询所有仓库的url接口/product/store-list
-     * 返回值Result对象给客户端响应查询到的List<Store>;
+     * 查询所有仓库的url接口/product/warehouse-list
+     * 返回值Result对象给客户端响应查询到的List<Warehouse>;
      */
-    @GetMapping("/store-list")
-    public Result storeList() {
+    @GetMapping("/warehouse-list")
+    public Result warehouseList() {
         //执行业务
-        List<Store> storeList = storeService.queryAllStore();
+        List<Warehouse> warehouseList = warehouseService.queryAllWarehouse();
         //响应
-        return Result.ok(storeList);
+        return Result.ok(warehouseList);
     }
 
     /**
@@ -88,7 +85,7 @@ public class ProductController {
     /**
      * 分页查询商品的url接口/product/product-page-list
      * @param page 对象用于接收请求参数页码pageNum、每页行数pageSize;
-     * @param product 对象用于接收请求参数仓库id storeId、商品名称productName、
+     * @param product 对象用于接收请求参数仓库id warehouseId、商品名称productName、
      * 品牌名称brandName、分类名称typeName
      * 上下架状态upDownState、是否过期isOverDate;
      * 返回值Result对象向客户端响应组装了所有分页信息的Page对象;
@@ -172,28 +169,6 @@ public class ProductController {
             productService.deleteProduct(productId);
         }
         return Result.ok("商品删除成功！");
-    }
-
-    @PutMapping("product-list-up")
-    public Result upProductList(@RequestBody List<Integer> productIds) {
-        for (Integer productId : productIds) {
-            Product product = new Product();
-            product.setProductId(productId);
-            product.setUpDownState("1");
-            productService.updateProductState(product);
-        }
-        return Result.ok("商品上架成功！");
-    }
-
-    @PutMapping("product-list-down")
-    public Result downProductList(@RequestBody List<Integer> productIds) {
-        for (Integer productId : productIds) {
-            Product product = new Product();
-            product.setProductId(productId);
-            product.setUpDownState("0");
-            productService.updateProductState(product);
-        }
-        return Result.ok("商品下架成功！");
     }
 
     /**

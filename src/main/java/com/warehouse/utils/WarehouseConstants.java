@@ -5,11 +5,11 @@ package com.warehouse.utils;
  */
 public interface WarehouseConstants {
 
-    //用户未审核
-    String USER_STATE_NOT_PASS = "0";
+    //用户已禁用
+    Integer USER_DISABLED = 0;
 
-    //用户已审核
-    String USER_STATE_PASS = "1";
+    //用户已启用
+    Integer USER_ENABLED = 1;
 
     //传递token的请求头名称
     String HEADER_TOKEN_NAME = "Token";

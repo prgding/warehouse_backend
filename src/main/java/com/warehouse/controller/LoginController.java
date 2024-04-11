@@ -16,6 +16,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.Objects;
 
 @RestController
 @Api(tags = "03-登录管理")
@@ -53,8 +54,7 @@ public class LoginController {
         User user = userService.findUserByCode(loginUser.getUserCode());
         //查到了用户
         if (user != null) {
-            //查到的用户状态是已审核
-            if (user.getUserState().equals(WarehouseConstants.USER_STATE_PASS)) {
+            if (Objects.equals(user.getIsEnabled(), WarehouseConstants.USER_ENABLED)) {
                 //将用户录入的密码进行加密
                 String password = DigestUtil.hmacSign(loginUser.getUserPwd());
                 //查到的用户的密码和用户录入的密码相同
@@ -74,7 +74,7 @@ public class LoginController {
                     return Result.err(Result.CODE_ERR_BUSINESS, "密码不正确！");
                 }
             } else {//查到的用户状态是未审核
-                return Result.err(Result.CODE_ERR_BUSINESS, "用户未审核！");
+                return Result.err(Result.CODE_ERR_BUSINESS, "该用户被禁用！");
             }
         } else {//没有查到用户
             return Result.err(Result.CODE_ERR_BUSINESS, "该用户不存在！");

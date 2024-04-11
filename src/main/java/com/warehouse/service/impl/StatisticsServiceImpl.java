@@ -17,7 +17,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     //统计各个仓库商品库存数量的业务方法
     @Override
-    public List<Statistics> statisticsStoreInvent() {
-        return statisticsMapper.statisticsStoreInvent();
+    public List<Statistics> statisticsWarehouseStock() {
+        return statisticsMapper.statisticsWarehouseStock();
     }
 }

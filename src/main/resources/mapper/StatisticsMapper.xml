@@ -6,13 +6,13 @@
 
     <!--
        //统计各个仓库商品库存数量的方法
-       public List<Statistics> statisticsStoreInvent()
+       public List<Statistics> statisticsWarehouseInvent()
      -->
-    <select id="statisticsStoreInvent" resultType="com.warehouse.entity.Statistics">
-        select t1.store_id, t2.store_name, ifnull(sum(t1.product_stock),0) totalStock
-        from product t1, store t2
-        where t1.store_id = t2.store_id
-        group by t1.store_id, t2.store_name
+    <select id="statisticsWarehouseStock" resultType="com.warehouse.entity.Statistics">
+        select t1.warehouse_id, t2.warehouse_name, ifnull(sum(t1.product_stock),0) totalStock
+        from product t1, warehouse t2
+        where t1.warehouse_id = t2.warehouse_id
+        group by t1.warehouse_id, t2.warehouse_name
     </select>
 
 </mapper>

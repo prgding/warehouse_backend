@@ -32,7 +32,7 @@ public class ProductTypeController {
     /**
      * 校验分类编码是否已存在的url接口/productCategory/verify-type-code
      */
-    @PostMapping("/verify-type-code")
+    @GetMapping("/verify-type-code")
     public Result checkTypeCode(String typeCode) {
         //执行业务
         //响应
@@ -64,7 +64,7 @@ public class ProductTypeController {
      *
      * @param productType 将请求传递的json数据封装到参数ProductType对象;
      */
-    @PostMapping("/type-update")
+    @PutMapping("/type-update")
     public Result updateType(@RequestBody ProductType productType) {
         return productTypeService.updateProductType(productType);
     }

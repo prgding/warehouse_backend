@@ -18,7 +18,7 @@ public class LoginUser {
 
     private String userPwd;//密码
 
-    private String userState;//用户状态
+    private Integer isEnabled;//是否启用
 
     private String verificationCode;//验证码
 }

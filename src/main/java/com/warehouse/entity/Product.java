@@ -19,8 +19,8 @@ public class Product {
 
     private Integer productId;//商品id
 
-    private Integer storeId;//商品所在仓库id
-    private String storeName;//非表中字段 --商品所在仓库名称
+    private Integer warehouseId;//商品所在仓库id
+    private String warehouseName;//非表中字段 --商品所在仓库名称
 
     private Integer brandId;//商品所属品牌id
     private String brandName;//非表中字段 -- 商品所属品牌名称
@@ -39,8 +39,6 @@ public class Product {
 
     private String introduce;//商品介绍
 
-    private String upDownState;//商品上下架状态,1.上架,0.下架
-
     private Double inPrice;//商品进价
 
     private Double salePrice;//商品售价
@@ -58,7 +56,7 @@ public class Product {
     private String imgs;//商品的图片地址
 
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date productDate;//商品的生产日期
+    private Date productionDate;//商品的生产日期
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date bestBeforeDate;//商品的保质期

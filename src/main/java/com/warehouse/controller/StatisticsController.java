@@ -23,10 +23,10 @@ public class StatisticsController {
     /**
      * 统计各个仓库商品库存数量的url接口/statistics/store-invent
      */
-    @GetMapping("/store-stock")
-    public Result statisticsStoreInvent() {
+    @GetMapping("/warehouse-stock")
+    public Result statisticsWarehouseInvent() {
         //执行业务
-        List<Statistics> statisticsList = statisticsService.statisticsStoreInvent();
+        List<Statistics> statisticsList = statisticsService.statisticsWarehouseStock();
         //响应
         return Result.ok(statisticsList);
     }

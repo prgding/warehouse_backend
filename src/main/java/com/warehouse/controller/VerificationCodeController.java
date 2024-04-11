@@ -39,7 +39,7 @@ public class VerificationCodeController {
             lineCaptcha.write(out);
             Console.log(lineCaptcha.getCode());
 
-            // Store CAPTCHA code in Redis
+            // Warehouse CAPTCHA code in Redis
             stringRedisTemplate.opsForValue().set(lineCaptcha.getCode().toLowerCase(), "", 5, TimeUnit.MINUTES);
 
             // Set response headers

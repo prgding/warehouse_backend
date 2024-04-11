@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.warehouse.mapper.OutWarehouseMapper">
+    <!--
+      //添加出库单的方法
+      public int insertOutWarehouse(OutWarehouse outWarehouse)
+    -->
+    <insert id="insertOutWarehouse">
+        insert into out_warehouse
+        values (null, #{productId}, #{warehouseId},
+                #{outNum}, #{createBy}, now(), 0)
+    </insert>
+
+    <!--
+      //查询出库单总行数的方法
+      public int outWarehouseCount(OutWarehouse outWarehouse);
+    -->
+    <select id="outWarehouseCount" resultType="integer">
+        select count(*)
+        from out_warehouse t1,
+             warehouse t2,
+             product t3,
+             user t4
+        where t1.warehouse_id = t2.warehouse_id
+          and t1.product_id = t3.product_id
+          and t1.create_by = t4.user_id
+
+        <if test="warehouseId != null">
+            and t1.warehouse_id = #{warehouseId}
+        </if>
+        <if test="productName != null and productName != ''">
+            and t3.product_name like concat('%', #{productName}, '%')
+        </if>
+        <if test="isOut != null and isOut != ''">
+            and t1.is_out = #{isOut}
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and DATE(t1.create_time) &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and DATE(t1.create_time) &lt;= #{endTime}
+        </if>
+    </select>
+
+    <!--
+      //分页查询出库单的方法
+      public List<OutWarehouse> outWarehousePage(@Param("page") Page page,
+                            @Param("outWarehouse") OutWarehouse outWarehouse);
+    -->
+    <select id="outWarehousePage" resultType="com.warehouse.entity.OutWarehouse">
+        select t1.*, t2.warehouse_name, t3.product_name, t4.user_code
+        from out_warehouse t1,
+             warehouse t2,
+             product t3,
+             user t4
+        where t1.warehouse_id = t2.warehouse_id
+          and t1.product_id = t3.product_id
+          and t1.create_by = t4.user_id
+
+        <if test="outWarehouse.warehouseId != null">
+            and t1.warehouse_id = #{outWarehouse.warehouseId}
+        </if>
+        <if test="outWarehouse.productName != null and outWarehouse.productName != ''">
+            and t3.product_name like concat('%', #{outWarehouse.productName}, '%')
+        </if>
+        <if test="outWarehouse.isOut != null and outWarehouse.isOut != ''">
+            and t1.is_out = #{outWarehouse.isOut}
+        </if>
+        <if test="outWarehouse.startTime != null and outWarehouse.startTime != ''">
+            and DATE(t1.create_time) &gt;= #{outWarehouse.startTime}
+        </if>
+        <if test="outWarehouse.endTime != null and outWarehouse.endTime != ''">
+            and DATE(t1.create_time) &lt;= #{outWarehouse.endTime}
+        </if>
+
+        order by t1.create_time desc
+        limit #{page.limitIndex}, #{page.pageSize}
+    </select>
+
+    <!--
+      //根据id将出库单状态改为已出库的方法
+      public int updateIsOutById(Integer outsId)
+    -->
+    <update id="updateIsOutById">
+        update out_warehouse
+        set is_out = 1
+        where outs_id = #{outsId}
+    </update>
+
+    <delete id="deleteOutWarehouse">
+        delete from out_warehouse
+        where outs_id = #{outsId}
+    </delete>
+</mapper>

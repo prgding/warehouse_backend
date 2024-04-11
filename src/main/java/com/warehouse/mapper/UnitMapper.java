@@ -2,6 +2,7 @@ package com.warehouse.mapper;
 
 import com.warehouse.entity.Unit;
 import com.warehouse.page.Page;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public interface UnitMapper {
 
     int selectUnitCount(Unit unit);
 
-    List<Unit> selectUnitPage(Page page, Unit unit);
+    List<Unit> selectUnitPage(@Param("page") Page page, @Param("unit") Unit unit);
 
     void saveUnit(Unit unit);
 
