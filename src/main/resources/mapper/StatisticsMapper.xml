@@ -9,10 +9,49 @@
        public List<Statistics> statisticsWarehouseInvent()
      -->
     <select id="statisticsWarehouseStock" resultType="com.warehouse.entity.Statistics">
-        select t1.warehouse_id, t2.warehouse_name, ifnull(sum(t1.product_stock),0) totalStock
-        from product t1, warehouse t2
-        where t1.warehouse_id = t2.warehouse_id
+        select t1.warehouse_id, t2.warehouse_name, ifnull(sum(t1.product_stock), 0) totalStock
+        from product t1 right join
+             warehouse t2
+        on t1.warehouse_id = t2.warehouse_id
+        <if test="date != null and date != ''">
+            and DATE(t1.create_time) &lt;= #{date}
+        </if>
         group by t1.warehouse_id, t2.warehouse_name
     </select>
 
+    <select id="findCapacitySum" resultType="double">
+        select sum(t1.capacity) from warehouse t1
+    </select>
+
+    <select id="inNum" resultType="java.lang.Integer">
+        select sum(in_num)
+        from in_warehouse
+        where is_in = 1
+        <if test="date != null and date != ''">
+            and month(create_time) = month(#{date})
+        </if>
+    </select>
+
+    <select id="outNum" resultType="java.lang.Integer">
+        select sum(out_num)
+        from out_warehouse
+        where is_out = 1
+        <if test="date != null and date != ''">
+            and month(create_time) = month(#{date})
+        </if>
+    </select>
+
+    <select id="todayIn" resultType="java.lang.Integer">
+        select sum(in_num)
+        from in_warehouse
+        where is_in = 1
+        and DATE(create_time) = CURDATE()
+    </select>
+
+    <select id="todayOut" resultType="java.lang.Integer">
+        select sum(out_num)
+        from out_warehouse
+        where is_out = 1
+        and DATE(create_time) = CURDATE()
+    </select>
 </mapper>

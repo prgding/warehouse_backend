@@ -17,9 +17,6 @@ public interface ProductMapper {
     //添加商品的方法
     int insertProduct(Product product);
 
-    //根据商品id修改商品的上下架状态
-    int updateStateById(Product product);
-
     //根据商品id删除商品的方法
     int deleteProductById(Integer productId);
 

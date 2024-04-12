@@ -12,9 +12,6 @@ public interface ProductService {
     //添加商品的业务方法
     Result saveProduct(Product product);
 
-    //修改商品上下架状态的业务方法
-    Result updateProductState(Product product);
-
     //删除商品的业务方法
     Result deleteProduct(Integer productId);
 

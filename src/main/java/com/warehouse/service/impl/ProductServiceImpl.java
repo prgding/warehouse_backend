@@ -58,17 +58,6 @@ public class ProductServiceImpl implements ProductService {
         return Result.err(Result.CODE_ERR_BUSINESS, "添加商品失败！");
     }
 
-    //修改商品上下架状态的业务方法
-    @Override
-    public Result updateProductState(Product product) {
-        //根据商品id修改商品上下架状态
-        int i = productMapper.updateStateById(product);
-        if (i > 0) {
-            return Result.ok("修改成功！");
-        }
-        return Result.err(Result.CODE_ERR_BUSINESS, "修改失败！");
-    }
-
     //删除商品的业务方法
     @Override
     public Result deleteProduct(Integer productId) {

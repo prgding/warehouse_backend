@@ -91,7 +91,7 @@
           null, #{warehouseId}, #{brandId}, #{productName}, #{productCode},
           #{productStock}, #{typeId}, #{unitId},
           #{introduce}, 0, #{inPrice}, #{salePrice}, now(),
-          null, #{createBy}, null, #{imgs}, #{productionDate}, #{bestBeforeDate}
+          #{createBy}, #{imgs}, #{productionDate}, #{bestBeforeDate}
         )
     </insert>
 

@@ -146,16 +146,6 @@ public class ProductController {
     }
 
     /**
-     * 修改商品上下架状态的url接口/product/state-change
-     *
-     * @param product 用于接收并封装请求json数据;
-     */
-    @PutMapping("/state-change")
-    public Result changeProductState(@RequestBody Product product) {
-        return productService.updateProductState(product);
-    }
-
-    /**
      * 删除商品的url接口/product/product-delete/{productId}
      */
     @DeleteMapping("/product-delete/{productId}")
