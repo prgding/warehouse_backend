@@ -8,16 +8,15 @@
        //统计各个仓库商品库存数量的方法
        public List<Statistics> statisticsWarehouseInvent()
      -->
+
     <select id="statisticsWarehouseStock" resultType="com.warehouse.entity.Statistics">
         select t1.warehouse_id, t2.warehouse_name, ifnull(sum(t1.product_stock), 0) totalStock
         from product t1 right join
-             warehouse t2
+        warehouse t2
         on t1.warehouse_id = t2.warehouse_id
-        <if test="date != null and date != ''">
-            and DATE(t1.create_time) &lt;= #{date}
-        </if>
         group by t1.warehouse_id, t2.warehouse_name
     </select>
+
 
     <select id="findCapacitySum" resultType="double">
         select sum(t1.capacity) from warehouse t1
@@ -53,5 +52,25 @@
         from out_warehouse
         where is_out = 1
         and DATE(create_time) = CURDATE()
+    </select>
+
+    <select id="trend" resultType="com.warehouse.entity.Statistics">
+        SELECT w.warehouse_id,w.warehouse_name,
+        IFNULL(in_totals.monthIn, 0) AS monthIn,
+        IFNULL(out_totals.monthOut, 0) AS monthOut,
+        (IFNULL(in_totals.monthIn, 0) - IFNULL(out_totals.monthOut, 0)) AS totalStock
+        FROM warehouse w
+        LEFT JOIN (
+        SELECT warehouse_id, SUM(in_num) AS monthIn
+        FROM in_warehouse
+        WHERE MONTH(create_time) = MONTH(#{date})
+        GROUP BY warehouse_id
+        ) in_totals ON w.warehouse_id = in_totals.warehouse_id
+        LEFT JOIN (
+        SELECT warehouse_id, SUM(out_num) AS monthOut
+        FROM out_warehouse
+        WHERE MONTH(create_time) = MONTH(#{date})
+        GROUP BY warehouse_id
+        ) out_totals ON w.warehouse_id = out_totals.warehouse_id;
     </select>
 </mapper>

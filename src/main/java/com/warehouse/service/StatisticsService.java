@@ -14,7 +14,5 @@ public interface StatisticsService {
 
     Map<String, Object> trend();
 
-    List<Integer> inAndOut();
-
     List<Integer> todayInOut();
 }

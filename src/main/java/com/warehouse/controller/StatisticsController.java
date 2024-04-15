@@ -47,13 +47,6 @@ public class StatisticsController {
         return Result.ok(result);
     }
 
-    @GetMapping("month-in-out")
-    public Result inOut() {
-        // 获取今年以来，各月份最后一天的各仓库的出入库量
-        List<Integer> integers = statisticsService.inAndOut();
-        return Result.ok(integers);
-    }
-
     @GetMapping("today-in-out")
     public Result todayInOut() {
         // 获取今天的出入库量

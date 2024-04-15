@@ -43,10 +43,53 @@ public class StatisticsServiceImpl implements StatisticsService {
         return date;
     }
 
+
+    //统计各个仓库商品库存数量的业务方法
+    @Override
+    public List<Statistics> statisticsWarehouseStock() {
+        return statisticsMapper.statisticsWarehouseStock();
+    }
+
+    @Override
+    public Double allOccupancyRate() {
+        List<Statistics> statistics = statisticsMapper.statisticsWarehouseStock();
+        double stock = statistics.stream().mapToInt(Statistics::getTotalStock).sum();
+        double capacitySum = statisticsMapper.findCapacitySum();
+        return (double) Math.round(stock / capacitySum * 100 * 100) / 100;
+    }
+
+    @Override
+    public List<Integer> todayInOut() {
+        ArrayList<Integer> nums = new ArrayList<>();
+        Integer todayIn = statisticsMapper.todayIn();
+        Integer todayOut = statisticsMapper.todayOut();
+        nums.add(todayIn);
+        nums.add(todayOut);
+        return nums;
+    }
+
+    @Override
+    public Map<String, Object> trend() {
+        ArrayList<List<Statistics>> lists = new ArrayList<>();
+        for (int i = 0; i < monthList("yyyy-MM-dd").size(); i++) {
+            List<Statistics> statistics = statisticsMapper.trend(monthList("yyyy-MM-dd").get(i));
+            lists.add(statistics);
+        }
+        System.out.println("lists = " + lists);
+        HashMap<String, Object> map = new HashMap<>();
+        ArrayList<String> monthList = monthList("MM月");
+        map.put("month", monthList);
+        map.put("lists", lists);
+
+        map.put("series", getSeries(lists));
+
+        return map;
+    }
+
     private static ArrayList<Map<String, Object>> getSeries(ArrayList<List<Statistics>> lists) {
         ArrayList<Map<String, Object>> series = new ArrayList<>();
         for (int i = 0; i < lists.get(0).size(); i++) {
-            Map<String, Object> seriesMap = new HashMap<>();
+            HashMap<String, Object> seriesMap = new HashMap<>();
             ArrayList<Integer> data = new ArrayList<>();
             for (List<Statistics> list : lists) {
                 data.add(list.get(i).getTotalStock());
@@ -59,56 +102,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         return series;
     }
 
-    //统计各个仓库商品库存数量的业务方法
-    @Override
-    public List<Statistics> statisticsWarehouseStock() {
-        return statisticsMapper.statisticsWarehouseStock(null);
-    }
 
-    @Override
-    public Double allOccupancyRate() {
-        List<Statistics> statistics = statisticsMapper.statisticsWarehouseStock(null);
-        double stock = statistics.stream().mapToInt(Statistics::getTotalStock).sum();
-        double capacitySum = statisticsMapper.findCapacitySum();
-        return (double) Math.round(stock / capacitySum * 100 * 100) / 100;
-    }
-
-    @Override
-    public Map<String, Object> trend() {
-        ArrayList<List<Statistics>> lists = new ArrayList<>();
-        for (int i = 0; i < monthList("yyyy-MM-dd").size(); i++) {
-            List<Statistics> statistics = statisticsMapper.statisticsWarehouseStock(monthList("yyyy-MM-dd").get(i));
-            lists.add(statistics);
-        }
-        System.out.println("lists = " + lists);
-        HashMap<String, Object> map = new HashMap<>();
-        ArrayList<String> monthList = monthList("MM月");
-        map.put("month", monthList);
-        map.put("lists", lists);
-        map.put("series", getSeries(lists));
-        return map;
-    }
-
-    @Override
-    public List<Integer> inAndOut() {
-        ArrayList<Integer> nums = new ArrayList<>();
-        for (int i = 0; i < monthList("yyyy-MM-dd").size(); i++) {
-            Integer inNum = statisticsMapper.inNum(monthList("yyyy-MM-dd").get(i));
-            Integer outNum = statisticsMapper.outNum(monthList("yyyy-MM-dd").get(i));
-            nums.add(inNum - outNum);
-        }
-        return nums;
-    }
-
-    @Override
-    public List<Integer> todayInOut() {
-        ArrayList<Integer> nums = new ArrayList<>();
-        Integer todayIn = statisticsMapper.todayIn();
-        Integer todayOut = statisticsMapper.todayOut();
-        nums.add(todayIn);
-        nums.add(todayOut);
-        return nums;
-    }
 
 
 }

@@ -90,7 +90,7 @@
         (
           null, #{warehouseId}, #{brandId}, #{productName}, #{productCode},
           #{productStock}, #{typeId}, #{unitId},
-          #{introduce}, 0, #{inPrice}, #{salePrice}, now(),
+          #{introduce}, #{inPrice}, #{salePrice}, now(),
           #{createBy}, #{imgs}, #{productionDate}, #{bestBeforeDate}
         )
     </insert>

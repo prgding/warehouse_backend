@@ -77,6 +77,4 @@ public class WarehouseController {
         //响应
         return warehouseService.deleteWarehouse(warehouseId);
     }
-
-
 }
