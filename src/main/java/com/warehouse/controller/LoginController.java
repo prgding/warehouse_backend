@@ -40,17 +40,11 @@ public class LoginController {
      */
     @PostMapping("/login")
     public Result login(@RequestBody LoginUser loginUser) {
-		/*
-		  校验验证码：
-		 */
+		// 校验验证码
         if (Boolean.FALSE.equals(stringRedisTemplate.hasKey(loginUser.getVerificationCode().toLowerCase()))) {
             return Result.err(Result.CODE_ERR_BUSINESS, "验证码不正确！");
         }
-
-		/*
-		  校验用户名密码:
-		 */
-        //根据用户编号查询用户
+		// 校验用户名密码
         User user = userService.findUserByCode(loginUser.getUserCode());
         //查到了用户
         if (user != null) {
@@ -67,16 +61,15 @@ public class LoginController {
                             .setPayload("isAdmin", user.getIsAdmin())
                             .setIssuedAt(new Date())
                             .setExpiresAt(new Date(System.currentTimeMillis() + expireTime))
-                            .setKey(user.getUserCode().getBytes())
-                            .sign();
+                            .setKey(user.getUserCode().getBytes()).sign();
                     return Result.ok("登录成功！", token);
-                } else {//查到的用户的密码和用户录入的密码不同
+                } else {
                     return Result.err(Result.CODE_ERR_BUSINESS, "密码不正确！");
                 }
-            } else {//查到的用户状态是未审核
+            } else {
                 return Result.err(Result.CODE_ERR_BUSINESS, "该用户被禁用！");
             }
-        } else {//没有查到用户
+        } else {
             return Result.err(Result.CODE_ERR_BUSINESS, "该用户不存在！");
         }
     }

@@ -44,12 +44,12 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
 
-    //统计各个仓库商品库存数量的业务方法
+    //统计各仓库库存数量
     @Override
     public List<Statistics> statisticsWarehouseStock() {
         return statisticsMapper.statisticsWarehouseStock();
     }
-
+    // 统计仓库占用比
     @Override
     public Double allOccupancyRate() {
         List<Statistics> statistics = statisticsMapper.statisticsWarehouseStock();
@@ -57,7 +57,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         double capacitySum = statisticsMapper.findCapacitySum();
         return (double) Math.round(stock / capacitySum * 100 * 100) / 100;
     }
-
+    // 统计当天入库和出库数量
     @Override
     public List<Integer> todayInOut() {
         ArrayList<Integer> nums = new ArrayList<>();
