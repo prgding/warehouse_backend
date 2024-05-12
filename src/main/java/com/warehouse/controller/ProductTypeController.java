@@ -11,8 +11,9 @@ import java.util.List;
 
 @RequestMapping("/productCategory")
 @RestController
-@Api(tags = "06-商品分类管理")
+@Api(tags = "05-商品分类管理")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class ProductTypeController {
 
     //注入ProductTypeService

@@ -6,6 +6,7 @@ import com.warehouse.service.StatisticsService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,8 +17,9 @@ import java.util.Map;
 @RequestMapping("/statistics")
 @RestController
 @RequiredArgsConstructor
-@Api(tags = "09-统计管理")
+@Api(tags = "10-统计管理")
 @Slf4j
+@CrossOrigin(origins = "*")
 public class StatisticsController {
 
     //注入StatisticsService

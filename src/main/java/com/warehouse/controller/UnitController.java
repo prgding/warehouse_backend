@@ -2,9 +2,9 @@ package com.warehouse.controller;
 
 import com.warehouse.entity.Unit;
 import com.warehouse.entity.Result;
-import com.warehouse.entity.Unit;
 import com.warehouse.page.Page;
 import com.warehouse.service.UnitService;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
  */
 @RequestMapping("/unit")
 @RestController
+@CrossOrigin(origins = "*")
+@Api(tags = "11-单位管理")
 @RequiredArgsConstructor
 public class UnitController {
     private final UnitService unitService;

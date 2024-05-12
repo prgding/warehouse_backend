@@ -45,7 +45,7 @@ public class Swagger2 {
         ParameterBuilder tokenPar = new ParameterBuilder();
         List<Parameter> pars = new ArrayList<>();
         tokenPar.name("token").description("token").modelRef(new ModelRef("string")).parameterType("header")
-                .defaultValue("abc")
+                .defaultValue("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsInVzZXJDb2RlIjoiYWRtaW4iLCJ1c2VyTmFtZSI6IueuoeeQhuWRmCIsImlzQWRtaW4iOiIxIiwiaWF0IjoxNzE0MTQ3MzY4LCJleHAiOjE3MTQyNDczNjh9.iTLHNcpd3UkZ6MpTBhb8ODzuxIy7_ocWB8mUUS1os08")
                 .build();
         pars.add(tokenPar.build());
         return pars;

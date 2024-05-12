@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 /**
@@ -55,6 +56,13 @@ public class SecurityFilter implements Filter {
          */
         //拿到前端归还的token
         String clientToken = request.getHeader(WarehouseConstants.HEADER_TOKEN_NAME);
+        Enumeration<String> headers = request.getHeaders(WarehouseConstants.HEADER_TOKEN_NAME);
+        while (headers.hasMoreElements()) {
+            String header = headers.nextElement();
+            log.info("header... = {}", header);
+        }
+        System.out.println("WarehouseConstants.HEADER_TOKEN_NAME = " + WarehouseConstants.HEADER_TOKEN_NAME);
+        log.info("clientToken = {}", clientToken);
 
         try {
             JWTValidator.of(clientToken)

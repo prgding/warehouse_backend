@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,8 +20,9 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping("/captcha")
 @RestController
 @RequiredArgsConstructor
-@Api(tags = "12-验证码管理")
+@Api(tags = "01-验证码管理")
 @Slf4j
+@CrossOrigin(origins = "*")
 public class VerificationCodeController {
 
     //注入redis模板

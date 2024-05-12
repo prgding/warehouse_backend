@@ -18,7 +18,8 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/brand")
-@Api(tags = "01-商品品牌管理")
+@Api(tags = "06-商品品牌管理")
+@CrossOrigin(origins = "*")
 public class ProductBrandController {
     private final ProductBrandService productBrandService;
 

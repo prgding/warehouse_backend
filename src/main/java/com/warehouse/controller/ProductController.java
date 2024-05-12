@@ -20,9 +20,10 @@ import java.util.List;
 
 @RequestMapping("/product")
 @RestController
-@Api(tags = "05-商品管理")
+@Api(tags = "04-商品管理")
 @RequiredArgsConstructor
 @Slf4j
+@CrossOrigin(origins = "*")
 public class ProductController {
 
     //注入WarehouseService

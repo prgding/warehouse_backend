@@ -11,6 +11,7 @@ import com.warehouse.utils.TokenUtils;
 import com.warehouse.utils.WarehouseConstants;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +20,10 @@ import java.util.Date;
 import java.util.Objects;
 
 @RestController
-@Api(tags = "03-登录管理")
+@Api(tags = "02-登录管理")
 @RequiredArgsConstructor
+@Slf4j
+@CrossOrigin(origins = "*")
 public class LoginController {
 
     //注入UserService
@@ -40,11 +43,11 @@ public class LoginController {
      */
     @PostMapping("/login")
     public Result login(@RequestBody LoginUser loginUser) {
-		// 校验验证码
+        // 校验验证码
         if (Boolean.FALSE.equals(stringRedisTemplate.hasKey(loginUser.getVerificationCode().toLowerCase()))) {
             return Result.err(Result.CODE_ERR_BUSINESS, "验证码不正确！");
         }
-		// 校验用户名密码
+        // 校验用户名密码
         User user = userService.findUserByCode(loginUser.getUserCode());
         //查到了用户
         if (user != null) {
@@ -62,6 +65,7 @@ public class LoginController {
                             .setIssuedAt(new Date())
                             .setExpiresAt(new Date(System.currentTimeMillis() + expireTime))
                             .setKey(user.getUserCode().getBytes()).sign();
+                    log.info("token:{}", token);
                     return Result.ok("登录成功！", token);
                 } else {
                     return Result.err(Result.CODE_ERR_BUSINESS, "密码不正确！");

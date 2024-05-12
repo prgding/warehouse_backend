@@ -17,8 +17,9 @@ import java.util.List;
 
 @RequestMapping("/out-warehouse")
 @RestController
-@Api(tags = "04-出库管理")
+@Api(tags = "08-出库管理")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class OutWarehouseController {
 
     //注入OutWarehouseService

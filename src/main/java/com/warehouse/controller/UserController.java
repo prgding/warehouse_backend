@@ -19,7 +19,8 @@ import java.util.List;
 @RequestMapping("/user")
 @RequiredArgsConstructor
 @Slf4j
-@Api(tags = "11-用户管理")
+@Api(tags = "03-用户管理")
+@CrossOrigin(origins = "*")
 public class UserController {
 
     //注入TokenUtils

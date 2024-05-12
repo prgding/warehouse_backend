@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/warehouse")
 @RestController
 @RequiredArgsConstructor
-@Api(tags = "10-仓库管理")
+@Api(tags = "09-仓库管理")
+@CrossOrigin(origins = "*")
 public class WarehouseController {
 
     //注入WarehouseService
