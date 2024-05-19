@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface UnitMapper {
+public interface UnitMapper  {
 
     //查询所有单位的方法
     List<Unit> findAllUnit();
